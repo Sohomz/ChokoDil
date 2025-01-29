@@ -1,0 +1,19 @@
+{
+  "name": "craftykoko",
+  "version": "1.0.0",
+  "description": "WebPage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sohomz/CraftyKoKo.git"
+  },
+  "author": "Sohom Das",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sohomz/CraftyKoKo/issues"
+  },
+  "homepage": "https://github.com/Sohomz/CraftyKoKo#readme"
+}
