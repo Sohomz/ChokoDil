@@ -1,19 +1,35 @@
 {
-  "name": "craftykoko",
+  "name": "11_nr_mock_web",
   "version": "1.0.0",
-  "description": "WebPage",
-  "main": "index.js",
+  "description": "this is to create a mock web app using demo structure",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env TEMP=G:\\ReactJs_Course\\ReactJS_Learning\\11_NR_Mock_Web\\.tmp TMPDIR=G:\\ReactJs_Course\\ReactJS_Learning\\11_NR_Mock_Web\\.tmp parcel index.html && parcel watch index.html",
+    "build": "cross-env TEMP=G:\\ReactJs_Course\\ReactJS_Learning\\11_NR_Mock_Web\\.tmp TMPDIR=G:\\ReactJs_Course\\ReactJS_Learning\\11_NR_Mock_Web\\.tmp parcel build index.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Sohomz/CraftyKoKo.git"
-  },
+  "keywords": [
+    "mock",
+    "web",
+    "app",
+    "react"
+  ],
   "author": "Sohom Das",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Sohomz/CraftyKoKo/issues"
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.6.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
+    "react-router": "^5.3.4",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^3.0.1"
   },
-  "homepage": "https://github.com/Sohomz/CraftyKoKo#readme"
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
+    "parcel": "^2.13.3",
+    "postcss": "^8.4.49",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.4.17"
+  }
 }
