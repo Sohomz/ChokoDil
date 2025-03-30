@@ -10,7 +10,7 @@ function Cart() {
     dispatch(clearCart());
   };
   return (
-    <div className="mt-24 text-center p-10">
+    <div className="mt-24 text-center p-10 min-h-screen">
       <h1 className="text-2xl">Cart</h1>
       <button
         className="bg-red-800 text-white rounded-md shadow-sm p-4"

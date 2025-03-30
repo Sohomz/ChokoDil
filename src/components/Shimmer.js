@@ -2,7 +2,7 @@ const Shimmer = () => {
   const shimmerCardNumber = 12;
   const shimmerArray = Array.from({ length: shimmerCardNumber });
   return (
-    <div className="flex flex-wrap p-10 justify-evenly items-center mt-48">
+    <div className="flex flex-wrap p-10 justify-evenly items-center mt-16">
       {shimmerArray.map((index) => (
         <div
           className="card-items p-4 w-80 border rounded-lg shadow-md animate-pulse"

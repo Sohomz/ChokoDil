@@ -1,7 +1,5 @@
 import images from "../utils/contants.js";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import UserContext from "../utils/UserContext.js";
 
 const Card = (props) => {
   const {
@@ -11,9 +9,7 @@ const Card = (props) => {
     cloudinaryImageId,
     costForTwo,
     avgRatingString,
-    isOpen,
   } = props.passData;
-  const { loggedInUser } = useContext(UserContext);
   //console.log(loggedInUser);
 
   const { deliveryTime } = props.passData.sla;
@@ -24,20 +20,21 @@ const Card = (props) => {
 
   return (
     <Link to={`/resturants/${props.passData.id}`}>
-      <div className="card-items mt-10 w-80 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:border-gray-300">
+      <div className="card-items mt-10 w-80 bg-white border-2 border-magenta-500 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
         <img
-          className="p-6 rounded-t-lg h-64 w-full"
+          className="rounded-t-lg w-full h-48 object-cover"
           src={`${images.FOODCARD_IMG}${cloudinaryImageId}`}
-          alt="food image"
+          alt="Food"
         />
+
         <div className="px-5 pb-5">
-          <p className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">
+          <p className="text-lg font-semibold tracking-tight text-gray-900">
             {name.split(" ").length < 4
               ? name.split(" ").join(" ")
               : name.split(" ").slice(0, 4).join(" ")}
           </p>
 
-          <h5 className="text-sm font-semibold tracking-tight text-gray-900 dark:text-white">
+          <h5 className="text-sm font-semibold tracking-tight text-gray-900">
             {cuisines.length < 5
               ? cuisines.join(", ")
               : cuisines.slice(0, 5).join(", ")}
@@ -65,7 +62,7 @@ const Card = (props) => {
                 return (
                   <svg
                     key={`halfStar-${index}`}
-                    className="w-4 h-4 text-gray-200 dark:text-gray-600"
+                    className="w-4 h-4 text-gray-200"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 22 20"
@@ -102,7 +99,7 @@ const Card = (props) => {
                 return (
                   <svg
                     key={`nullStar-${index}`}
-                    className="w-4 h-4 text-gray-200 dark:text-gray-600"
+                    className="w-4 h-4 text-gray-200"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -122,12 +119,9 @@ const Card = (props) => {
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold text-gray-900 dark:text-white">
+            <span className="text-2xl font-bold text-gray-900">
               {costForTwo}
             </span>
-            <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              Add to cart
-            </button>
           </div>
         </div>
       </div>

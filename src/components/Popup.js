@@ -7,7 +7,7 @@ const Popup = ({ message, showPopup }) => {
         showPopup ? "opacity-100" : "opacity-0"
       } ${showPopup ? "pointer-events-auto" : "pointer-events-none"}`}
     >
-      <div className="bg-white p-4 rounded shadow-lg">
+      <div className="bg-white text-black p-4 rounded shadow-lg">
         <p>{message}</p>
       </div>
     </div>

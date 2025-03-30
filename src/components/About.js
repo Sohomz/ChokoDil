@@ -2,40 +2,21 @@ import User from "./User";
 import UserClass from "./UserClass";
 import React from "react";
 
-// export default About = () => {
-//   return (
-//     <div>
-//       <h1>This is About page</h1>
-//       <User name={"Sohom Das (function)"} />
-//       <UserClass name={"Sohom Das (class)"} />
-//     </div>
-//   );
-// };
-
-class About extends React.Component {
-  constructor(props) {
-    //console.log("Parent constructor called");
-    super(props);
-    this.props = props;
-  }
-
-  async componentDidMount() {
-    //console.log("Parent componentDidMount called");
-  }
-
-  componentDidUpdate() {
-    //console.log("Parent componentDidUpdate called");
-  }
-
-  render() {
-    //console.log("Parent render called");
-    return (
-      <div>
-        <h1>This is About page</h1>
-        <User name="SohomDas (function)" />
-        <UserClass />
+export default About = () => {
+  return (
+    <div className="bg-gray-50 p-8 rounded-lg shadow-lg mt-24 border-2 border-magenta-500 min-h-screen">
+      <div className="text-base text-gray-600 leading-relaxed">
+        আমাদের সম্পর্কে <br></br>আমাদের প্রতিষ্ঠান একটি বিশ্বস্ত এবং সেবামূলক
+        উদ্যোগ যেখানে মানসম্মত পরিষেবা প্রদানের জন্য আমরা প্রতিশ্রুতিবদ্ধ।
+        আমাদের লক্ষ্য হলো প্রতিটি গ্রাহকের চাহিদা পূরণ করা এবং তাঁদের অভিজ্ঞতাকে
+        সহজ এবং স্মরণীয় করে তোলা। আমাদের মূল্যবোধ আমাদের মূল্যবোধের মধ্যে
+        রয়েছে: আমাদের যাত্রা আমরা শুরু করেছিলাম একটি ছোট উদ্যোগ থেকে, কিন্তু
+        গ্রাহকদের ভালোবাসা এবং বিশ্বাসের ভিত্তিতে আজ আমরা একটি বড় পরিবার।
+        আমাদের এই সফরে আমরা পেয়েছি অসংখ্য চ্যালেঞ্জ, যা আমাদের আরো শক্তিশালী
+        এবং দক্ষ করে তুলেছে। আমাদের লক্ষ্য আমাদের প্রধান লক্ষ্য হলো: আমাদের
+        সঙ্গে আপনার মূল্যবান সময় ব্যয় করার জন্য ধন্যবাদ। আমরা আশা করি, আমাদের
+        পরিষেবায় আপনি সর্বোচ্চ সন্তুষ্টি পাবেন
       </div>
-    );
-  }
-}
-export default About;
+    </div>
+  );
+};

@@ -1,86 +1,62 @@
 import Card, { withOnlineLabel } from "./Card.js";
-import SearchBox from "./SearchBox.js";
-import { useEffect, useState, useContext } from "react";
+import { useEffect } from "react";
 import Shimmer from "./Shimmer.js";
 import useOnlineStatus from "../utils/useOnlineStatus.js";
-import UserContext from "../utils/UserContext.js";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchRestaurants } from "../utils/restaurantSlice.js";
 
 const Body = () => {
-  const [listToUpdate, setListToUpdate] = useState([]); // this is to update the list of restaurants
-  const [error, setError] = useState(false); // this is to handle the error state
-  const [filteredResturant, setFilteredResturant] = useState([]); // this is to fix search bug if do 2nd or 3rd or more than that
   const RestaurantCardOnline = withOnlineLabel(Card);
-  const { loggedInUser, setUserInfo } = useContext(UserContext);
-  //console.log(userData);
-  useEffect(() => {
-    //console.log("useEffect for fetchData running");
-    fetchData();
-  }, []);
+  const dispatch = useDispatch();
 
-  const fetchData = async () => {
-    //console.log("fetchData function called");
-    try {
-      const fetchedAPI = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.867114&lng=88.3674381&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      );
-      const jsonConverted = await fetchedAPI.json();
-      const dataOfRestuarant =
-        jsonConverted.data.cards[1].card.card.gridElements.infoWithStyle
-          .restaurants;
-      setListToUpdate(dataOfRestuarant);
-      setFilteredResturant(dataOfRestuarant);
-      //console.log("Data fetched and state updated");
-    } catch (error) {
-      setError(true);
-      //console.log("Error in fetchData:", error);
-    }
-  };
+  const { filteredList, list, loading, error } = useSelector(
+    (state) => state.restaurants
+  );
+
+  // Fetch restaurants on component mount
+  useEffect(() => {
+    dispatch(fetchRestaurants());
+  }, [dispatch]);
+
+  // Check online status
   const onlineOfflineStatus = useOnlineStatus();
 
-  //console.log(listToUpdate);
-
-  useEffect(() => {
-    //console.log("Online status changed:", onlineOfflineStatus);
-  }, [onlineOfflineStatus]);
   if (!onlineOfflineStatus) {
-    return <h1>Hey, you are offline</h1>;
-  } else {
     return (
-      <div>
-        {listToUpdate.length === 0 || error ? (
-          <div>
-            <Shimmer />
-          </div>
-        ) : (
-          <div>
-            <SearchBox
-              listToUpdate={listToUpdate}
-              setListToUpdate={setListToUpdate}
-              filteredResturant={filteredResturant}
-              setFilteredResturant={setFilteredResturant}
-            />
-            <input
-              className="border border-black mt-28 h-12 py-24 ml-11"
-              value={loggedInUser}
-              onChange={(e) => {
-                setUserInfo(e.target.value);
-              }}
-            ></input>
-
-            <div className="flex flex-wrap p-10 justify-evenly items-center mt-48">
-              {filteredResturant.map((i) =>
-                !i.info.isOpen ? (
-                  <Card key={i.info.id} passData={i.info} />
-                ) : (
-                  <RestaurantCardOnline key={i.info.id} passData={i.info} />
-                )
-              )}
-            </div>
-          </div>
-        )}
-      </div>
+      <h1 className="text-center text-red-500 mt-20 min-h-max">
+        Hey, you are offline
+      </h1>
     );
   }
+
+  if (loading) {
+    return <Shimmer />;
+  }
+
+  if (error) {
+    return (
+      <h1 className="text-center text-red-500">
+        Failed to fetch restaurants. Please try again later...
+      </h1>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 mt-24">
+      <div className="flex flex-wrap p-10 justify-evenly items-center">
+        {filteredList.map((restaurant) =>
+          !restaurant.info.isOpen ? (
+            <Card key={restaurant.info.id} passData={restaurant.info} />
+          ) : (
+            <RestaurantCardOnline
+              key={restaurant.info.id}
+              passData={restaurant.info}
+            />
+          )
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Body;
