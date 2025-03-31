@@ -23,7 +23,7 @@ const Body = () => {
 
   if (!onlineOfflineStatus) {
     return (
-      <h1 className="text-center text-red-500 mt-20 min-h-max">
+      <h1 className="text-center text-red-500 mt-20 min-h-screen">
         Hey, you are offline
       </h1>
     );

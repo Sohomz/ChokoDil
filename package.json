@@ -1,11 +1,11 @@
 {
-  "name": "11_nr_mock_web",
+  "name": "craftykoko",
   "version": "1.0.0",
   "description": "this is to create a mock web app using demo structure",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env TEMP=G:\\ReactJs_Course\\ReactJS_Learning\\11_NR_Mock_Web\\.tmp TMPDIR=G:\\ReactJs_Course\\ReactJS_Learning\\11_NR_Mock_Web\\.tmp parcel index.html && parcel watch index.html",
-    "build": "cross-env TEMP=G:\\ReactJs_Course\\ReactJS_Learning\\11_NR_Mock_Web\\.tmp TMPDIR=G:\\ReactJs_Course\\ReactJS_Learning\\11_NR_Mock_Web\\.tmp parcel build index.html"
+    "start": "cross-env TEMP=G:\\craftykoko\\.tmp TMPDIR=G:\\craftykoko\\.tmp parcel index.html && parcel watch index.html",
+    "build": "cross-env TEMP=G:\\craftykoko\\.tmp TMPDIR=G:\\craftykoko\\.tmp parcel build index.html"
   },
   "keywords": [
     "mock",
@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.0",
+    "axios": "^1.8.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "buffer": "^6.0.3",
     "cross-env": "^7.0.3",
     "parcel": "^2.13.3",
     "postcss": "^8.4.49",

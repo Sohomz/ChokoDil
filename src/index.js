@@ -17,6 +17,8 @@ import UserContext from "./utils/UserContext";
 import { Provider } from "react-redux";
 import appstore from "./utils/appStore";
 import Cart from "./components/Cart";
+import CreateItem from "./components/CreateItem";
+import ItemsTable from "./components/ItemsTable";
 
 const AppLayout = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -53,6 +55,8 @@ root.render(
         <Route path="/About" element={<About />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/resturants/:resId" element={<ResturantMenu />} />
+        <Route path="/create" element={<CreateItem />} />
+        <Route path="/itemsTable" element={<ItemsTable />} />
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>

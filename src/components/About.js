@@ -4,7 +4,7 @@ import React from "react";
 
 export default About = () => {
   return (
-    <div className="bg-gray-50 p-8 rounded-lg shadow-lg mt-24 border-2 border-magenta-500 min-h-screen">
+    <div className="bg-gray-50 p-8 rounded-lg shadow-lg mt-24 border-2 border-magenta-500 min-h-screen ml-5 mr-5 mb-5">
       <div className="text-base text-gray-600 leading-relaxed">
         আমাদের সম্পর্কে <br></br>আমাদের প্রতিষ্ঠান একটি বিশ্বস্ত এবং সেবামূলক
         উদ্যোগ যেখানে মানসম্মত পরিষেবা প্রদানের জন্য আমরা প্রতিশ্রুতিবদ্ধ।
