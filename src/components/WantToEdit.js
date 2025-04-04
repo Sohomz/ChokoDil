@@ -1,136 +1,99 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
-function CreateItem() {
-  const [formData, setFormData] = useState({
-    namee: "",
-    description: "",
-    price: "",
-    quantity: "",
-    isVeg: false,
-    category: "",
-    subCategory: "",
-    offer: 0,
-    daysToDeliver: "",
-    available: false,
-    rating: 0,
-    image: "",
-  });
+function WantToEdit({
+  showPopup,
+  closePopup,
+  initialData,
+  saveChanges,
+  editID,
+}) {
+  const [formData, setFormData] = useState({});
 
-  const generateId = (category, subCategory) => {
-    // Get current date and time
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are zero-based, pad with 0
-    const day = String(now.getDate()).padStart(2, "0");
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const milliseconds = String(now.getMilliseconds())
-      .padStart(3, "0")
-      .slice(0, 2); // Limit to first 2 digits
-
-    // Generate ID
-    const id = `${category.charAt(0)}${subCategory.substring(
-      0,
-      2
-    )}${year}${month}${day}${hours}${minutes}${milliseconds}`;
-    return id;
-  };
-
-  const clearData = () => {
-    setFormData({
-      namee: "",
-      description: "",
-      price: "",
-      quantity: "",
-      isVeg: false,
-      category: "",
-      subCategory: "",
-      offer: 0,
-      daysToDeliver: "",
-      available: false,
-      rating: 0,
-      image: "",
-    });
-  };
+  // Sync formData with initialData whenever initialData changes
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        id: initialData.id, // Use correct casing
+        name: initialData.name, // Ensure matching keys
+        description: initialData.description,
+        price: parseFloat(initialData.price), // Convert to number
+        quantity: parseFloat(initialData.quantity),
+        isVeg: initialData.isVeg, // Use directly as received
+        isAvailable: initialData.isAvailable,
+        category: initialData.category,
+        subCategory: initialData.subCategory,
+        offer: parseInt(initialData.offer, 10),
+        daysToDeliver: parseInt(initialData.daysToDeliver, 10),
+        rating: parseFloat(initialData.rating),
+        image: initialData.image || "",
+      });
+    }
+  }, [initialData]); // Trigger useEffect whenever initialData changes
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
-      setFormData({ ...formData, [name]: checked });
+      setFormData({ ...formData, [name]: checked ? 1 : 0 }); // Convert checkbox to integer (0/1)
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-
-    const url = "https://localhost:7051/api/MenuItem";
-
-    const passingData = {
-      id: generateId(formData.category, formData.subCategory), // Correct field name
-      name: formData.namee, // 'name' matches the API spec
-      description: formData.description,
-      price: parseFloat(formData.price), // 'price' as a number
-      quantity: parseFloat(formData.quantity), // 'quantity' as a number
-      isVeg: formData.isVeg ? 1 : 0, // Boolean converted to integer (0 or 1)
-      isAvailable: formData.available ? 1 : 0, // Boolean converted to integer (0 or 1)
-      category: formData.category, //string
-      subCategory: formData.subCategory, //string
-      offer: parseInt(formData.offer, 10), // 'offer' as an integer
-      daysToDeliver: parseInt(formData.daysToDeliver, 10), // 'daysToDeliver' as an integer
-      rating: parseFloat(formData.rating), // 'rating' as a number
-      image: formData.image, // string
-    };
-
-    console.log("Passing Data:", passingData);
-
-    try {
-      const response = await axios.post(url, passingData, {
+    await axios
+      .put(`https://localhost:7051/api/MenuItem/${editID}`, formData, {
+        //pass the updated formData onChange
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json", // Ensure JSON data format
         },
+      })
+      .then((result) => {
+        if (result.status === 200) {
+          toast.success("Item updated successfully");
+        }
+      })
+      .catch((err) => {
+        toast.error(
+          `Error: ${err.response?.data || "Failed to update the data"}`
+        );
       });
-      toast.success("Item added to the list");
 
-      clearData();
-    } catch (error) {
-      toast.error("Failed to add the item.");
-    }
+    saveChanges(formData); // Call the save function with updated data
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen mt-20 bg-gradient-to-r from-pink-400 via-purple-400 to-white">
-      <ToastContainer />
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-200 ${
+        showPopup ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      <div className="bg-white text-black p-6 rounded shadow-lg w-full max-w-2xl">
         <h1 className="text-lg font-bold mb-6 text-center text-purple-600">
-          Create Item
+          Edit Item
         </h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSave} className="space-y-4">
           {/* Name and Description */}
           <div className="grid grid-cols-2 gap-4 items-center">
             <div>
               <label className="block text-sm font-medium">Name:</label>
               <input
                 type="text"
-                name="namee"
-                value={formData.namee}
+                name="name"
+                value={formData.name || ""}
                 onChange={handleChange}
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
-                required
               />
             </div>
             <div>
               <label className="block text-sm font-medium">Description:</label>
               <textarea
                 name="description"
-                value={formData.description}
+                value={formData.description || ""}
                 onChange={handleChange}
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
-                required
               />
             </div>
           </div>
@@ -143,22 +106,20 @@ function CreateItem() {
                 type="number"
                 name="price"
                 min={0}
-                value={formData.price}
+                value={formData.price || 0}
                 onChange={handleChange}
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
-                required
               />
             </div>
             <div>
               <label className="block text-sm font-medium">Quantity:</label>
               <input
                 type="number"
-                min={0}
                 name="quantity"
-                value={formData.quantity}
+                min={0}
+                value={formData.quantity || 0}
                 onChange={handleChange}
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
-                required
               />
             </div>
           </div>
@@ -169,17 +130,17 @@ function CreateItem() {
               <input
                 type="checkbox"
                 name="isVeg"
-                checked={formData.isVeg}
+                checked={formData.isVeg === 1}
                 onChange={handleChange}
                 className="mr-2"
               />
-              <label className="text-sm font-medium">Vegeterian</label>
+              <label className="text-sm font-medium">Veg/Non-Veg</label>
             </div>
             <div className="flex items-center">
               <input
                 type="checkbox"
-                name="available"
-                checked={formData.available}
+                name="isAvailable"
+                checked={formData.isAvailable === 1}
                 onChange={handleChange}
                 className="mr-2"
               />
@@ -193,10 +154,9 @@ function CreateItem() {
               <label className="block text-sm font-medium">Category:</label>
               <select
                 name="category"
-                value={formData.category}
+                value={formData.category || ""}
                 onChange={handleChange}
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
-                required
               >
                 <option value="" disabled>
                   Select Category
@@ -211,10 +171,9 @@ function CreateItem() {
               <label className="block text-sm font-medium">Sub-Category:</label>
               <select
                 name="subCategory"
-                value={formData.subCategory}
+                value={formData.subCategory || ""}
                 onChange={handleChange}
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
-                required
               >
                 <option value="" disabled>
                   Select Sub-Category
@@ -230,13 +189,13 @@ function CreateItem() {
           {/* Offer and Days to Deliver */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium">Offer:</label>
+              <label className="block text-sm font-medium">Offer %:</label>
               <input
                 type="number"
                 name="offer"
                 min={0}
                 max={100}
-                value={formData.offer}
+                value={formData.offer || 0}
                 onChange={handleChange}
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
               />
@@ -249,57 +208,55 @@ function CreateItem() {
                 type="number"
                 name="daysToDeliver"
                 min={0}
-                value={formData.daysToDeliver}
+                value={formData.daysToDeliver || ""}
                 onChange={handleChange}
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
-                required
               />
             </div>
-          </div>
-
-          {/* Rating */}
-          <div>
-            <label className="block text-sm font-medium">Rating (1-5):</label>
-            <div className="flex items-center">
+            <div>
+              <label className="block text-sm font-medium">Rating</label>
               <input
                 type="range"
                 name="rating"
-                min="1"
-                max="5"
-                step="0.1"
-                value={formData.rating}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    rating: parseFloat(e.target.value),
-                  })
-                }
+                min={0}
+                max={5}
+                step={0.1}
+                value={formData.rating || 0}
+                onChange={handleChange}
                 className="w-full cursor-pointer appearance-none h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg"
+                e="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
               />
               <span className="ml-2 text-sm font-bold text-purple-600">
                 {formData.rating}
               </span>
             </div>
+            {/* Image Upload */}
+            <div>
+              <label className="block text-sm font-medium">Image URL:</label>
+              <input
+                type="text"
+                name="image"
+                value={formData.image || ""}
+                onChange={handleChange}
+                className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
+              />
+            </div>
           </div>
 
-          {/* Image Upload */}
-          <div>
-            <label className="block text-sm font-medium">Image URL:</label>
-            <input
-              type="text"
-              name="image"
-              onChange={handleChange}
-              className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
-            />
-          </div>
-
-          {/* Submit Button */}
-          <div className="flex justify-end">
+          {/* Buttons */}
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500"
+              onClick={closePopup}
+            >
+              Cancel
+            </button>
             <button
               type="submit"
-              className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700"
+              className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
             >
-              Submit
+              Save Changes
             </button>
           </div>
         </form>
@@ -308,4 +265,4 @@ function CreateItem() {
   );
 }
 
-export default CreateItem;
+export default WantToEdit;
