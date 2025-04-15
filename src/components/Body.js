@@ -36,7 +36,7 @@ const Body = () => {
   if (error) {
     return (
       <h1 className="text-center text-red-500">
-        Failed to fetch restaurants. Please try again later...
+        Failed to fetch menu items. Please try again later...
       </h1>
     );
   }
@@ -44,14 +44,11 @@ const Body = () => {
   return (
     <div className="min-h-screen bg-gray-50 mt-24">
       <div className="flex flex-wrap p-10 justify-evenly items-center">
-        {filteredList.map((restaurant) =>
-          !restaurant.info.isOpen ? (
-            <Card key={restaurant.info.id} passData={restaurant.info} />
+        {filteredList.map((item) =>
+          !item.isAvailable ? (
+            <Card key={item.id} passData={item} />
           ) : (
-            <RestaurantCardOnline
-              key={restaurant.info.id}
-              passData={restaurant.info}
-            />
+            <RestaurantCardOnline key={item.id} passData={item} />
           )
         )}
       </div>

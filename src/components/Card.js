@@ -1,31 +1,45 @@
 import images from "../utils/contants.js";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Card = (props) => {
   const {
-    key,
+    id,
     name,
-    cuisines,
-    cloudinaryImageId,
-    costForTwo,
-    avgRatingString,
+    description,
+    price,
+    quantity,
+    isVeg,
+    isAvailable,
+    category,
+    subCategory,
+    offer,
+    daysToDeliver,
+    rating,
+    image,
   } = props.passData;
   //console.log(loggedInUser);
 
-  const { deliveryTime } = props.passData.sla;
   const starsArray = [1, 2, 3, 4, 5];
-  const fullStar = Math.floor(avgRatingString);
-  const halfStar = Number(avgRatingString) - Number(fullStar) >= 0.5 ? 1 : 0;
+  const fullStar = Math.floor(rating);
+  const halfStar = Number(rating) - Number(fullStar) >= 0.5 ? 1 : 0;
   const nullStar = images.TOTAL_STARS - (fullStar + halfStar);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <Link to={`/resturants/${props.passData.id}`}>
       <div className="card-items mt-10 w-80 bg-white border-2 border-magenta-500 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-        <img
-          className="rounded-t-lg w-full h-48 object-cover"
-          src={`${images.FOODCARD_IMG}${cloudinaryImageId}`}
-          alt="Food"
-        />
+        <div className="relative">
+          {!imageLoaded && (
+            <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-t-lg w-full h-48 z-0"></div>
+          )}
+          <img
+            className="rounded-t-lg w-full h-48 object-contain"
+            src="https://drive.google.com/thumbnail?id=1bV1EJ99ngBucx-JDvtcI9zAdroJX61D4"
+            alt="Food"
+            onLoad={() => setImageLoaded(true)}
+          />
+        </div>
 
         <div className="px-5 pb-5">
           <p className="text-lg font-semibold tracking-tight text-gray-900">
@@ -35,9 +49,7 @@ const Card = (props) => {
           </p>
 
           <h5 className="text-sm font-semibold tracking-tight text-gray-900">
-            {cuisines.length < 5
-              ? cuisines.join(", ")
-              : cuisines.slice(0, 5).join(", ")}
+            {subCategory}
           </h5>
 
           <div className="flex items-center mt-2.5 mb-5">
@@ -112,15 +124,15 @@ const Card = (props) => {
             </div>
 
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-              {avgRatingString}
+              {rating}
             </span>
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-              {deliveryTime} mins
+              {daysToDeliver} day/s
             </span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-2xl font-bold text-gray-900">
-              {costForTwo}
+              {quantity} item/s for INR {price}.00
             </span>
           </div>
         </div>
@@ -134,8 +146,8 @@ export const withOnlineLabel = (Card) => {
   return (props) => {
     return (
       <div className="relative inline-block">
-        <h5 className="px-2 bg-green-700 text-white shadow-lg absolute top-8 left-4 rounded-lg">
-          Online
+        <h5 className="px-2 bg-green-700 text-white shadow-lg absolute top-8 left-4 rounded-lg z-10">
+          Available
         </h5>
         <Card {...props} />
       </div>

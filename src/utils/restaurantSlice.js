@@ -5,13 +5,10 @@ export const fetchRestaurants = createAsyncThunk(
   "restaurants/fetchRestaurants",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.867114&lng=88.3674381&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      );
+      const response = await fetch("https://localhost:7051/api/MenuItem");
       const json = await response.json();
-      const data =
-        json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants;
-      return data;
+      console.log(json);
+      return json;
     } catch (error) {
       return rejectWithValue("Failed to fetch restaurants");
     }
