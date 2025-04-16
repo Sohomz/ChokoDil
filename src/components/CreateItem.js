@@ -202,28 +202,22 @@ function CreateItem() {
                   Select Category
                 </option>
                 <option value="chocolate">Chocolate</option>
-                <option value="cakes">Cakes</option>
+                <option value="cakes">Cake</option>
                 <option value="brownie">Brownie</option>
                 <option value="mousse">Mousse</option>
+                <option value="small chocolate">Small chocolate</option>
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium">Sub-Category:</label>
-              <select
+              <input
                 name="subCategory"
                 value={formData.subCategory}
                 onChange={handleChange}
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
+                type="text"
                 required
-              >
-                <option value="" disabled>
-                  Select Sub-Category
-                </option>
-                <option value="small chocolate">Small Chocolate</option>
-                <option value="cakes">Cakes</option>
-                <option value="brownie">Brownie</option>
-                <option value="mousse">Mousse</option>
-              </select>
+              />
             </div>
           </div>
 

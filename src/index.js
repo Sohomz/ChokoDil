@@ -19,6 +19,7 @@ import appstore from "./utils/appStore";
 import Cart from "./components/Cart";
 import CreateItem from "./components/CreateItem";
 import ItemsTable from "./components/ItemsTable";
+import LandingPage from "./components/LandingPage";
 
 const AppLayout = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -57,6 +58,8 @@ root.render(
         <Route path="/resturants/:resId" element={<ResturantMenu />} />
         <Route path="/create" element={<CreateItem />} />
         <Route path="/itemsTable" element={<ItemsTable />} />
+        <Route path="/landingPage" element={<LandingPage />} />
+
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>

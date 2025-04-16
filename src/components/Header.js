@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import SearchBox from "./SearchBox";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
+import Font, { Text } from "react-font";
 
 const Header = () => {
   const [loginBtn, setLoginBtn] = useState(false);
@@ -33,21 +34,31 @@ const Header = () => {
   };
 
   return (
-    <div className="flex fixed items-center h-20 p-4 w-full top-0 z-20 shadow-lg bg-gradient-to-r from-pink-500 to-purple-600 text-white">
-      <img
-        src={images.LOGO_IMG}
-        alt="logo"
-        className="imglogo"
-        style={{ width: "70px", height: "70px" }}
-      />
-      {location.pathname === "/" ? <SearchBox /> : null}
+    <div className="flex fixed items-center h-20 p-4 w-full top-0 z-20 shadow-lg bg-slate-100 text-black">
+      <div className="flex justify-between items-center w-full">
+        <img
+          src={images.LOGO_IMG}
+          alt="logo"
+          className="mr-16 select-none"
+          style={{ width: "70px", height: "70px" }}
+        />
+        {location.pathname === "/" ? (
+          <SearchBox isMenuOpen={isMenuOpen} />
+        ) : (
+          <Font className="select-none">
+            <Text family="Monoton" className="tracking-widest text-3xl">
+              CraftyKoKo
+            </Text>
+          </Font>
+        )}
+      </div>
 
       {isMobileView ? (
         // Mobile View
         <div className="flex items-center justify-end w-full">
           <button
             onClick={toggleMenu}
-            className="text-white text-2xl focus:outline-none"
+            className="text-black text-2xl focus:outline-none"
           >
             {isMenuOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
           </button>
@@ -65,7 +76,7 @@ const Header = () => {
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      className="h-6 w-6 text-white"
+                      className="h-6 w-6 text-black"
                     >
                       <path
                         strokeLinecap="round"
@@ -84,21 +95,12 @@ const Header = () => {
                 <Link to="/About">About Us</Link>
               </li>
               <li className="hover:text-gray-200">Contact</li>
-              <li>
-                <button
-                  value={loginBtn ? "Log out" : "Log in"}
-                  className="text-white w-24 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  onClick={() => setLoginBtn(!loginBtn)}
-                >
-                  {loginBtn ? "Log out" : "Log in"}
-                </button>
-              </li>
             </ul>
           )}
         </div>
       ) : (
         // Desktop View
-        <ul className="nav font-semibold flex ml-4 mr-4 space-x-10 justify-end items-center w-full cursor-pointer text-white">
+        <ul className="nav font-semibold flex ml-4 mr-4 space-x-10 justify-end items-center w-full cursor-pointer text-black">
           <li className="bg-white text-pink-500 font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-gray-100">
             <Link to="/">Menu</Link>
           </li>
@@ -112,7 +114,7 @@ const Header = () => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="h-12 w-8 text-white"
+                    className="h-12 w-8 text-black"
                   >
                     <path
                       strokeLinecap="round"
@@ -131,12 +133,6 @@ const Header = () => {
             <Link to="/About">About Us</Link>
           </li>
           <li>Contact</li>
-          <input
-            type="button"
-            value={loginBtn ? "Log out" : "Log in"}
-            className="text-white w-24 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onClick={() => setLoginBtn(!loginBtn)}
-          />
         </ul>
       )}
     </div>

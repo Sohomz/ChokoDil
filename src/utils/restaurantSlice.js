@@ -7,7 +7,6 @@ export const fetchRestaurants = createAsyncThunk(
     try {
       const response = await fetch("https://localhost:7051/api/MenuItem");
       const json = await response.json();
-      console.log(json);
       return json;
     } catch (error) {
       return rejectWithValue("Failed to fetch restaurants");
@@ -24,6 +23,18 @@ const restaurantSlice = createSlice({
     error: null,
   },
   reducers: {
+    filterByCategory: (state, action) => {
+      const filteredItems = state.list.filter(
+        (item) =>
+          item.category?.toLowerCase().trim() ===
+          action.payload.toLowerCase().trim()
+      );
+
+      return {
+        ...state,
+        filteredList: filteredItems,
+      };
+    },
     setFilteredRestaurants: (state, action) => {
       state.filteredList = action.payload;
     },
@@ -46,5 +57,6 @@ const restaurantSlice = createSlice({
   },
 });
 
-export const { setFilteredRestaurants } = restaurantSlice.actions;
+export const { setFilteredRestaurants, filterByCategory } =
+  restaurantSlice.actions;
 export default restaurantSlice.reducer;

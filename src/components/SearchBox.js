@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setFilteredRestaurants } from "../utils/restaurantSlice";
 import Popup from "./Popup";
 
-const SearchBox = () => {
+const SearchBox = ({ isMenuOpen }) => {
   const [searchText, setSearchText] = useState("");
   const [error, setError] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -17,14 +17,14 @@ const SearchBox = () => {
     try {
       const filteredSearchValue = listToUpdate.filter((res) => {
         //when finidng use list
-        const resName = res.info.name
+        const itemName = res.name
           .toLowerCase()
           .includes(input.trim().toLowerCase());
-        const cuisineString = res.info.cuisines.join(" ");
-        const cuisineSearch = cuisineString
+
+        const subCategoryName = res.subCategory
           .toLowerCase()
           .includes(input.trim().toLowerCase());
-        return resName || cuisineSearch;
+        return itemName || subCategoryName;
       });
 
       if (filteredSearchValue.length === 0) {
@@ -48,7 +48,7 @@ const SearchBox = () => {
   };
 
   return (
-    <div className="ml-40 w-1/2">
+    <div className={`ml-10 ${isMenuOpen ? "w-1/2" : "w-full"}`}>
       <div className="relative">
         <div className="flex">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">

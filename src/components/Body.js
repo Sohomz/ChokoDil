@@ -1,25 +1,15 @@
 import Card, { withOnlineLabel } from "./Card.js";
-import { useEffect } from "react";
 import Shimmer from "./Shimmer.js";
 import useOnlineStatus from "../utils/useOnlineStatus.js";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchRestaurants } from "../utils/restaurantSlice.js";
+import { useSelector } from "react-redux";
 
 const Body = () => {
-  const RestaurantCardOnline = withOnlineLabel(Card);
-  const dispatch = useDispatch();
-
-  const { filteredList, list, loading, error } = useSelector(
-    (state) => state.restaurants
-  );
-
-  // Fetch restaurants on component mount
-  useEffect(() => {
-    dispatch(fetchRestaurants());
-  }, [dispatch]);
-
   // Check online status
   const onlineOfflineStatus = useOnlineStatus();
+  const RestaurantCardOnline = withOnlineLabel(Card);
+  const { filteredList, loading, error } = useSelector(
+    (state) => state.restaurants
+  );
 
   if (!onlineOfflineStatus) {
     return (
@@ -39,6 +29,10 @@ const Body = () => {
         Failed to fetch menu items. Please try again later...
       </h1>
     );
+  }
+
+  if (!filteredList || filteredList.length === 0) {
+    return <Shimmer />;
   }
 
   return (
