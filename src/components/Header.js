@@ -6,6 +6,7 @@ import SearchBox from "./SearchBox";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import Font, { Text } from "react-font";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Header = () => {
   const [loginBtn, setLoginBtn] = useState(false);
@@ -80,38 +81,26 @@ const Header = () => {
             {isMenuOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
           </button>
           {isMenuOpen && (
-            <ul className="absolute inset-y-0 left-0 top-20 bg-slate-300 shadow-lg py-4 px-6 flex flex-col space-y-4 w-1/2 h-screen transition-transform transform translate-x-0">
-              <li className="hover:text-gray-200">
+            <ul className="absolute inset-y-0 left-0 top-20 bg-slate-50 shadow-lg py-4 px-6 flex flex-col space-y-4 w-1/2 h-screen transition-transform transform translate-x-0">
+              <li className="hover:bg-slate-200 shadow-md p-4">
                 <Link to="/">Menu</Link>
               </li>
-              <li className="hover:text-gray-200">
+              <li className="hover:bg-slate-200 shadow-md p-4">
                 <Link to="/Cart" className="flex items-center">
-                  <div className="relative mr-1 scale-75">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="h-6 w-6 text-black"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                      />
-                    </svg>
-                    <span className="absolute -top-1 left-3 rounded-full bg-red-500 p-0.5 px-2 text-xs text-red-50">
+                  <div className="relative mr-1">
+                    <div className="scale-150">
+                      <AiOutlineShoppingCart />
+                    </div>
+                    <span className="absolute -top-2 left-3 m-2 rounded-full bg-red-500 px-1 text-xs text-red-50">
                       {cartItems.length}
                     </span>
                   </div>
-                  Cart
                 </Link>
               </li>
-              <li className="hover:text-gray-200">
+              <li className="hover:bg-slate-200 shadow-md p-4">
                 <Link to="/About">About Us</Link>
               </li>
-              <li className="hover:text-gray-200">Contact</li>
+              <li className="hover:bg-slate-200 shadow-md p-4">Contact</li>
             </ul>
           )}
         </div>
