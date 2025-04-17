@@ -36,15 +36,11 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const [imageLoaded, setImageLoaded] = useState(content.map(() => false));
 
-  const filteredList = useSelector((state) => state.restaurants.filteredList);
-
   const handleCategorySelection = (category) => {
-    console.log("Dispatching filterByCategory for:", category);
-
     dispatch(fetchRestaurants()).then(() => {
       dispatch(filterByCategory(category));
-      console.log("Filtered List after dispatch:", filteredList);
-      navigate("/");
+
+      navigate("/filteredList");
     });
   };
   useEffect(() => {

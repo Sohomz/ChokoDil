@@ -52,13 +52,13 @@ root.render(
   <Router>
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        <Route path="/" element={<Body />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/About" element={<About />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/resturants/:resId" element={<ResturantMenu />} />
         <Route path="/create" element={<CreateItem />} />
         <Route path="/itemsTable" element={<ItemsTable />} />
-        <Route path="/landingPage" element={<LandingPage />} />
+        <Route path="/filteredList" element={<Body />} />
 
         <Route path="*" element={<ErrorPage />} />
       </Route>

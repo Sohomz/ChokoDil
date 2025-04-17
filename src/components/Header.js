@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import images from "../utils/contants";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -13,28 +13,44 @@ const Header = () => {
   const location = useLocation();
   const [isMobileView, setIsMobileView] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobileView(window.innerWidth < 768); // Adjust breakpoint as needed
+      setIsMobileView(window.innerWidth < 768);
     };
-
     // Initial check on component mount
     handleResize();
-
     // Listen for window resize events
     window.addEventListener("resize", handleResize);
-
     // Clean up the event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  //this code is to handle outsideclick, then close the menu in mobile devices
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   return (
-    <div className="flex fixed items-center h-20 p-4 w-full top-0 z-20 shadow-lg bg-slate-100 text-black">
+    <div
+      ref={menuRef}
+      className=" flex fixed items-center h-20 p-4 w-full top-0 z-20 shadow-lg bg-slate-100 text-black"
+    >
       <div className="flex justify-between items-center w-full">
         <img
           src={images.LOGO_IMG}
@@ -57,13 +73,14 @@ const Header = () => {
         // Mobile View
         <div className="flex items-center justify-end w-full">
           <button
-            onClick={toggleMenu}
+            onClick={toggleMenu} //function to toggle if menu is open or closed. If open then mobile view, elsedesktop
             className="text-black text-2xl focus:outline-none"
           >
+            {/* icons */}
             {isMenuOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
           </button>
           {isMenuOpen && (
-            <ul className="absolute top-20 right-0 bg-gradient-to-r from-pink-500 to-purple-600 shadow-lg rounded-md py-4 px-6 flex flex-col items-end space-y-4 w-48">
+            <ul className="absolute inset-y-0 left-0 top-20 bg-slate-300 shadow-lg py-4 px-6 flex flex-col space-y-4 w-1/2 h-screen transition-transform transform translate-x-0">
               <li className="hover:text-gray-200">
                 <Link to="/">Menu</Link>
               </li>
