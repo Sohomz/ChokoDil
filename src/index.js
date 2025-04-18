@@ -36,11 +36,9 @@ const AppLayout = () => {
   return (
     <Provider store={appstore}>
       <UserContext.Provider value={{ loggedInUser: userInfo, setUserInfo }}>
-        <div className="app-layout">
-          <Header />
-          <Outlet />
-          <Footer />
-        </div>
+        <Header />
+        <Outlet />
+        <Footer />
       </UserContext.Provider>
     </Provider>
   );

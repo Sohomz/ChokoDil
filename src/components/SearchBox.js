@@ -8,14 +8,17 @@ const SearchBox = ({ isMenuOpen }) => {
   const [error, setError] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const dispatch = useDispatch();
-  const listToUpdate = useSelector((state) => state.restaurants.list); // Fetch the full list from Redux
+  const listToUpdate = useSelector((state) => state.restaurants.filteredList); // Fetch the full list from Redux
+  const listToUpdateBackup = useSelector(
+    (state) => state.restaurants.filteredList2nd
+  );
 
   const handleSearch = (e) => {
     const input = e.target.value;
     setSearchText(input);
 
     try {
-      const filteredSearchValue = listToUpdate.filter((res) => {
+      const filteredSearchValue = listToUpdateBackup.filter((res) => {
         //when finidng use list
         const itemName = res.name
           .toLowerCase()
@@ -48,7 +51,7 @@ const SearchBox = ({ isMenuOpen }) => {
   };
 
   return (
-    <div className={`ml-10 ${isMenuOpen ? "w-1/2" : "w-full"}`}>
+    <div className={`ml-10 w-1/2`}>
       <div className="relative">
         <div className="flex">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">

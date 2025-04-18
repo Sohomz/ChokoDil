@@ -1,5 +1,5 @@
 const Shimmer = () => {
-  const shimmerCardNumber = 12;
+  const shimmerCardNumber = 8;
   const shimmerArray = Array.from({ length: shimmerCardNumber }, (_, i) => i); //i means its index value assigned to each element, elseEky warning will come in Shimmer UI,  this will create an array with sequenctial like 0,1,2,3,4
   return (
     <div className="flex flex-wrap p-10 justify-evenly items-center mt-16">

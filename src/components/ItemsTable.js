@@ -71,7 +71,7 @@ function itemsTable() {
   return (
     <div className="mt-24 min-h-screen relative overflow-x-auto shadow-md sm:rounded-lg">
       <ToastContainer />
-      <table className="w-full text-sm text-left rtl:text-right text-gray-600">
+      <table className="w-full text-sm text-left text-gray-600">
         <thead className="text-xs text-black uppercase bg-gray-50 border border-b-2">
           <tr>
             <th scope="col" className="px-6 py-3">
@@ -80,7 +80,7 @@ function itemsTable() {
             <th scope="col" className="px-6 py-3">
               Price
             </th>
-            <th scope="col" className="px-6 py-3">
+            {/* <th scope="col" className="px-6 py-3">
               Qunatity
             </th>
             <th scope="col" className="px-6 py-3">
@@ -100,7 +100,7 @@ function itemsTable() {
             </th>
             <th scope="col" className="px-6 py-3">
               Rating
-            </th>
+            </th> */}
             <th scope="col" className="px-6 py-3">
               Action
             </th>
@@ -108,48 +108,50 @@ function itemsTable() {
         </thead>
         <tbody>
           {data && data.length > 0 ? (
-            data.map((d) => (
-              <>
-                <tr
-                  key={d.ID}
-                  className="bg-white border-b shadow-sm border-gray-200 hover:bg-slate-200"
+            data.map((d, index) => (
+              <tr
+                key={`${d.ID}_${index}` || index}
+                className="bg-white border-b shadow-sm border-gray-200 hover:bg-slate-200"
+              >
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                 >
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  {d.name}
+                </th>
+                <td className="px-6 py-3">{d.price} INR</td>
+                {/* <td className="px-6 py-3">{d.quantity} pcs</td>
+                <td className="px-6 py-3">{d.isVeg == 1 ? "Yes" : "No"}</td>
+                <td className="px-6 py-3">
+                  {d.isAvailable == 1 ? "Yes" : "No"}
+                </td>
+                <td className="px-6 py-3">{d.category}</td>
+                <td className="px-6 py-3">{d.subCategory}</td>
+                <td className="px-6 py-3">{d.offer}% off</td>
+                <td className="px-6 py-3">{d.rating}</td> */}
+                <td className="flex items-center px-6 py-4 justify-between">
+                  <button
+                    className="font-medium p-1 text-blue-600 dark:text-blue-500 hover:underline"
+                    onClick={() => handleEdit(d.id)}
                   >
-                    {d.name}
-                  </th>
-                  <td className="px-6 py-3">{d.price} INR</td>
-                  <td className="px-6 py-3">{d.quantity} pcs</td>
-                  <td className="px-6 py-3">{d.isVeg == 1 ? "Yes" : "No"}</td>
-                  <td className="px-6 py-3">
-                    {d.isAvailable == 1 ? "Yes" : "No"}
-                  </td>
-                  <td className="px-6 py-3">{d.category}</td>
-                  <td className="px-6 py-3">{d.subCategory}</td>
-                  <td className="px-6 py-3">{d.offer}% off</td>
-                  <td className="px-6 py-3">{d.rating}</td>
-                  <td className="flex items-center px-6 py-4 justify-between">
-                    <button
-                      className="font-medium p-1 text-blue-600 dark:text-blue-500 hover:underline"
-                      onClick={() => handleEdit(d.id)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="font-medium p-1 text-red-600 dark:text-red-500 hover:underline ms-3"
-                      id={d.ID}
-                      onClick={() => handleRemove(d.id)}
-                    >
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              </>
+                    Edit
+                  </button>
+                  <button
+                    className="font-medium p-1 text-red-600 dark:text-red-500 hover:underline ms-3"
+                    id={d.ID}
+                    onClick={() => handleRemove(d.id)}
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
             ))
           ) : (
-            <Shimmer />
+            <tr>
+              <td>
+                <Shimmer />
+              </td>
+            </tr>
           )}
         </tbody>
       </table>

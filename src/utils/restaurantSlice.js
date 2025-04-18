@@ -19,6 +19,7 @@ const restaurantSlice = createSlice({
   initialState: {
     list: [],
     filteredList: [],
+    filteredList2nd: [],
     loading: false,
     error: null,
   },
@@ -33,6 +34,7 @@ const restaurantSlice = createSlice({
       return {
         ...state,
         filteredList: filteredItems,
+        filteredList2nd: filteredItems,
       };
     },
     setFilteredRestaurants: (state, action) => {

@@ -2,6 +2,7 @@ import Card, { withOnlineLabel } from "./Card.js";
 import Shimmer from "./Shimmer.js";
 import useOnlineStatus from "../utils/useOnlineStatus.js";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Body = () => {
   // Check online status
@@ -10,6 +11,10 @@ const Body = () => {
   const { filteredList, loading, error } = useSelector(
     (state) => state.restaurants
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to top whenever Body loads
+  }, []);
 
   if (!onlineOfflineStatus) {
     return (
@@ -36,7 +41,7 @@ const Body = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-24">
+    <div className="bg-gray-50 mt-24">
       <div className="flex flex-wrap p-10 justify-evenly items-center">
         {filteredList.map((item) =>
           !item.isAvailable ? (

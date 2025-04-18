@@ -9,24 +9,43 @@ function WantToEdit({
   saveChanges,
   editID,
 }) {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    //error was coming due to undefined values --> uncontrolled, so initialized everyone.
+    id: "",
+    name: "",
+    description: "",
+    price: 0,
+    quantity: 0,
+    isVeg: 0,
+    isAvailable: 0,
+    category: "",
+    subCategory: "",
+    offer: 0,
+    daysToDeliver: 0,
+    rating: 0,
+    image: "",
+  });
 
   // Sync formData with initialData whenever initialData changes
   useEffect(() => {
     if (initialData) {
       setFormData({
-        id: initialData.id, // Use correct casing
-        name: initialData.name, // Ensure matching keys
-        description: initialData.description,
-        price: parseFloat(initialData.price), // Convert to number
-        quantity: parseFloat(initialData.quantity),
-        isVeg: initialData.isVeg, // Use directly as received
-        isAvailable: initialData.isAvailable,
-        category: initialData.category,
-        subCategory: initialData.subCategory,
-        offer: parseInt(initialData.offer, 10),
-        daysToDeliver: parseInt(initialData.daysToDeliver, 10),
-        rating: parseFloat(initialData.rating),
+        id: initialData.id || "", // Use correct casing
+        name: initialData.name || "", // Ensure matching keys
+        description: initialData.description || "",
+        price: isNaN(initialData.price) ? 0 : parseFloat(initialData.price), // Convert to number
+        quantity: isNaN(initialData.quantity)
+          ? 0
+          : parseFloat(initialData.quantity),
+        isVeg: initialData.isVeg || 0, // Use directly as received
+        isAvailable: initialData.isAvailable || 0,
+        category: initialData.category || "",
+        subCategory: initialData.subCategory || "",
+        offer: isNaN(initialData.offer) ? 0 : parseInt(initialData.offer, 10),
+        daysToDeliver: isNaN(initialData.daysToDeliver)
+          ? 0
+          : parseInt(initialData.daysToDeliver, 10),
+        rating: isNaN(initialData.rating) ? 0 : parseFloat(initialData.rating),
         image: initialData.image || "",
       });
     }
@@ -149,14 +168,14 @@ function WantToEdit({
           </div>
 
           {/* Category and Subcategory */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
+          <div className="flex items-center gap-2">
+            <>
               <label className="block text-sm font-medium">Category:</label>
               <select
                 name="category"
                 value={formData.category || ""}
                 onChange={handleChange}
-                className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
+                className="border rounded-lg focus:ring focus:ring-purple-300 py-2"
               >
                 <option value="" disabled>
                   Select Category
@@ -167,23 +186,19 @@ function WantToEdit({
                 <option value="mousse">Mousse</option>
                 <option value="small chocolate">Small chocolate</option>
               </select>
-            </div>
-            <div>
+
               <label className="block text-sm font-medium">Sub-Category:</label>
               <div>
-                <label className="block text-sm font-medium">
-                  Sub-Category:
-                </label>
                 <input
                   name="subCategory"
                   value={formData.subCategory}
                   onChange={handleChange}
-                  className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
+                  className="border py-2 rounded-lg focus:ring focus:ring-purple-300 w-full"
                   type="text"
                   required
                 />
               </div>
-            </div>
+            </>
           </div>
 
           {/* Offer and Days to Deliver */}
