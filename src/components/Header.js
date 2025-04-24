@@ -106,7 +106,7 @@ const Header = () => {
         ) : (
           // Desktop View
           <ul className="nav font-semibold flex ml-4 mr-4 space-x-10 justify-end items-center cursor-pointer text-black">
-            <li className="bg-white text-pink-500 font-semibold py-2 px-4 rounded-lg shadow-lg hover:bg-gray-100">
+            <li className="bg-white text-pink-500 font-semibold py-2 px-4 rounded-lg shadow-lg hover:shadow-indigo-500/50">
               <Link to="/">Menu</Link>
             </li>
             <li className="flex">

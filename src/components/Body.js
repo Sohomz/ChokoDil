@@ -41,7 +41,7 @@ const Body = () => {
   }
 
   return (
-    <div className="bg-gray-50 mt-24">
+    <div className="bg-white mt-24">
       <div className="flex flex-wrap p-10 justify-evenly items-center">
         {filteredList.map((item) =>
           !item.isAvailable ? (

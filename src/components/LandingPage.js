@@ -36,10 +36,9 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const [imageLoaded, setImageLoaded] = useState(content.map(() => false));
 
-  const handleCategorySelection = (category) => {
-    dispatch(fetchRestaurants()).then(() => {
+  const handleCategorySelection = async (category) => {
+    await dispatch(fetchRestaurants()).then(() => {
       dispatch(filterByCategory(category));
-
       navigate("/filteredList");
     });
   };

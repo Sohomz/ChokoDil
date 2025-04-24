@@ -27,7 +27,7 @@ const Card = (props) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <div className="card-items mt-10 w-80 bg-white border-2 border-magenta-500 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+    <div className="card-items mt-10 w-80 bg-white border-2 border-magenta-500 rounded-lg shadow-lg shadow-slate-600 transition-transform duration-300 hover:scale-105">
       <div className="relative">
         {!imageLoaded && (
           <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-t-lg w-full h-48 z-0"></div>
