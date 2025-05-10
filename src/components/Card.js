@@ -1,6 +1,7 @@
 import images from "../utils/contants.js";
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const Card = (props) => {
   const {
@@ -25,6 +26,11 @@ const Card = (props) => {
   const halfStar = Number(rating) - Number(fullStar) >= 0.5 ? 1 : 0;
   const nullStar = images.TOTAL_STARS - (fullStar + halfStar);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleAdd = () => {
+    dispatch(addItem(props));
+  };
 
   return (
     <div className="card-items mt-10 w-80 bg-white border-2 border-magenta-500 rounded-lg shadow-lg shadow-slate-600 transition-transform duration-300 hover:scale-105">
@@ -41,14 +47,27 @@ const Card = (props) => {
       </div>
 
       <div className="px-5 pb-5">
-        <p className="text-lg font-semibold tracking-tight text-gray-900">
-          {name.split(" ").length < 4
-            ? name.split(" ").join(" ")
-            : name.split(" ").slice(0, 4).join(" ")}
-        </p>
+        <div className="flex justify-between items-center">
+          <h1 className="text-lg font-semibold tracking-tight text-gray-900">
+            {name.split(" ").length < 4
+              ? name.split(" ").join(" ")
+              : name.split(" ").slice(0, 4).join(" ")}
+          </h1>
+          <>
+            {isVeg ? (
+              <span className="bg-green-600 text-white text-xs font-semibold px-2.5 py-1 rounded">
+                Veg
+              </span>
+            ) : (
+              <span className="bg-red-700 text-white text-xs font-semibold px-2.5 py-1 rounded">
+                Non-Veg
+              </span>
+            )}
+          </>
+        </div>
 
-        <h5 className="text-sm font-semibold tracking-tight text-gray-900">
-          {subCategory}
+        <h5 className="text-sm font-semibold mt-2 tracking-tight text-gray-900">
+          {description}
         </h5>
 
         <div className="flex items-center mt-2.5 mb-5">
@@ -122,17 +141,22 @@ const Card = (props) => {
             })}
           </div>
 
-          <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
+          <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded ">
             {rating}
-          </span>
-          <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-            {daysToDeliver} day/s
           </span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gray-900">
-            {quantity} item/s for INR {price}.00
+          <span className="text-lg font-bold text-gray-900">
+            INR {price}.00
           </span>
+          <button
+            className="bg-green-600 shadow-lg hover:bg-green-700 shadow-lime-600 px-4 text-white font-bold py-3 rounded-md"
+            onClick={() => {
+              handleAdd();
+            }}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>

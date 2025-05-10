@@ -1,25 +1,28 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addItem } from "../utils/cartSlice";
+import { addItem, removeItem } from "../utils/cartSlice";
 
-function ItemListResMenuCat({ items }) {
+function ItemListResMenuCat({ items, index }) {
   const dispatch = useDispatch();
+  const id = items.passData.id;
   const handleClick = () => {
     //dispatch an action
     dispatch(addItem(items));
-    console.log("itemlsit", items.card);
+  };
+
+  const handelRemove = (index) => {
+    console.log("clicked");
+    dispatch(removeItem({ id, index }));
   };
   return (
-    <div className="border-b-2">
+    <div className="border-b-2 shadow-lg rounded-md shadow-slate-500 mt-6 items-center">
       <div className="flex justify-between">
         <div className="w-3/4">
-          <div className="font-semibold">{items.card.info.name}</div>
+          <div className="font-semibold">{items.passData.name}</div>
           <span className="font-semibold font-serif">
-            {parseFloat(items.card.info.price / 100).toFixed(2)}
+            {parseFloat(items.passData.price).toFixed(2)}
           </span>
-          <p className="font-light">
-            {items.card.info.description.replace("NO MSG.", "").trim()}
-          </p>
+          <p className="font-light">{items.passData.description}</p>
         </div>
         <div className="relative min-w-max">
           <button
@@ -29,12 +32,20 @@ function ItemListResMenuCat({ items }) {
             ADD+
           </button>
           <img
-            src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${items.card.info.imageId}`}
-            alt={items.card.info.name}
+            src={items.passData.image}
+            alt={items.passData.name}
             className="h-32 w-32 rounded-xl"
           ></img>
         </div>
       </div>
+      <button
+        className="p-3 bg-red-600 text-white font-bold rounded-md mb-2"
+        onClick={() => {
+          handelRemove(index); //index coming from map func from where its called Cart.js
+        }}
+      >
+        Remove
+      </button>
     </div>
   );
 }

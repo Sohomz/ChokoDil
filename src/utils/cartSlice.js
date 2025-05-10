@@ -10,9 +10,16 @@ const cartSlice = createSlice({
       state.items.push(action.payload);
     },
     removeItem: (state, action) => {
-      state.items.pop();
+      const { id, index } = action.payload; // Extract both values
+      //index value check
+      if (index >= 0 && index < state.items.length) {
+        state.items.splice(index, 1); //Remove 1 element from exact index passed from map func Cart.js
+        console.log("Updated State Items:", state.items);
+      } else {
+        console.log("Invalid index, item not found!");
+      }
     },
-    clearCart: (state, action) => {
+    clearCart: (state) => {
       state.items.length = 0;
     },
   },
