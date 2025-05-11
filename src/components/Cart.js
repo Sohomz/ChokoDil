@@ -39,7 +39,7 @@ function Cart() {
                 ci,
                 index //syntax array.map(element, index, array)
               ) => (
-                <div key={ci.id}>
+                <div key={ci.id || index}>
                   <ItemListResMenuCat items={ci} index={index} />
                 </div>
               )

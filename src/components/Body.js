@@ -3,6 +3,7 @@ import Shimmer from "./Shimmer.js";
 import useOnlineStatus from "../utils/useOnlineStatus.js";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Body = () => {
   // Check online status
@@ -11,6 +12,7 @@ const Body = () => {
   const { filteredList, loading, error } = useSelector(
     (state) => state.restaurants
   );
+  const nav = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scrolls to top whenever Body loads
@@ -36,9 +38,11 @@ const Body = () => {
     );
   }
 
-  if (!filteredList || filteredList.length === 0) {
-    return <Shimmer />;
-  }
+  useEffect(() => {
+    if (!filteredList || filteredList.length === 0) {
+      nav("/");
+    }
+  });
 
   return (
     <div className="bg-white mt-24">

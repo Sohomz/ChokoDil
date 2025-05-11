@@ -202,7 +202,7 @@ function CreateItem() {
                   Select Category
                 </option>
                 <option value="chocolate">Chocolate</option>
-                <option value="cakes">Cake</option>
+                <option value="cake">Cake</option>
                 <option value="brownie">Brownie</option>
                 <option value="mousse">Mousse</option>
                 <option value="small chocolate">Small chocolate</option>
