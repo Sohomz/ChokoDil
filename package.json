@@ -16,12 +16,12 @@
   "author": "Sohom Das",
   "license": "ISC",
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.6.0",
     "axios": "^1.8.4",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
-    "react-font": "^1.2.1",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "react-router": "^5.3.4",

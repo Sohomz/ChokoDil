@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import SearchBox from "./SearchBox";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
-import Font, { Text } from "react-font";
 import chocolateIcon from "../images/dark-chocolate.png";
 import cartIcon from "../images/shopping-bag.png";
 import aboutUsIcon from "../images/about-us.png";
@@ -63,17 +62,9 @@ const Header = () => {
         {location.pathname === "/filteredList" ? (
           <SearchBox isMenuOpen={isMenuOpen} />
         ) : !isMobileView ? (
-          <Font className="lg:mr-16 sm:mr-10 md:mr-10 select-none">
-            <Text family="Monoton" className="tracking-widest text-3xl">
-              CraftyKoKo
-            </Text>
-          </Font>
+          <h1 className="font-semibold text-3xl ml-12">CraftyKoKo</h1>
         ) : (
-          <Font className="lg:mr-16 sm:mr-10 md:mr-10 select-none">
-            <Text family="Monoton" className="tracking-widest text-2xl">
-              CraftyKoKo
-            </Text>
-          </Font>
+          <h1 className="font-semibold text-3xl ml-12">CraftyKoKo</h1>
         )}
 
         {isMobileView ? (

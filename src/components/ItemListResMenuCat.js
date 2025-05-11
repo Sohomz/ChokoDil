@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { addItem, removeItem } from "../utils/cartSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"; // Using Heroicons for icons
 
 function ItemListResMenuCat({ items, index }) {
   const dispatch = useDispatch();
@@ -9,55 +10,80 @@ function ItemListResMenuCat({ items, index }) {
   const handleClick = () => {
     try {
       dispatch(addItem(items));
-      toast.success("Item added to the list");
+      toast.success(`${items.passData.name} added to cart!`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
     } catch (err) {
-      toast.error("Failed to add the item");
+      toast.error("Failed to add item to cart.", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
     }
   };
 
-  const handelRemove = (index) => {
+  const handelRemove = () => {
     try {
       dispatch(removeItem({ index }));
     } catch (err) {
-      toast.error("Failed to remove item");
+      toast.error("Failed to remove item from cart.", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
     }
   };
+
   return (
-    <>
-      <ToastContainer className="mt-20" />
-      <div className="border-b-2 shadow-lg rounded-md shadow-slate-500 mt-6 items-center">
-        <div className="flex justify-between">
-          <div className="w-3/4">
-            <div className="font-semibold">{items.passData.name}</div>
-            <span className="font-semibold font-serif">
-              {parseFloat(items.passData.price).toFixed(2)}
-            </span>
-            <p className="font-light">{items.passData.description}</p>
-          </div>
-          <div className="relative min-w-max">
-            <button
-              className="p-2 bg-green-700 text-white shadow-lg rounded-sm absolute top-0 right-0 hover:bg-green-900"
-              onClick={handleClick}
-            >
-              ADD+
-            </button>
-            <img
-              src={items.passData.image}
-              alt={items.passData.name}
-              className="h-32 w-32 rounded-xl"
-            ></img>
-          </div>
+    <div className="mt-4 rounded-lg shadow-md overflow-hidden bg-white border border-gray-100">
+      <div className="px-5 py-4 flex items-center">
+        {/* Image */}
+        <div className="relative w-20 h-20 rounded-md overflow-hidden shadow-sm mr-4">
+          <img
+            src={items.passData.image}
+            alt={items.passData.name}
+            className="w-full h-full object-cover"
+          />
         </div>
-        <button
-          className="p-3 bg-red-600 text-white font-bold rounded-md mb-2"
-          onClick={() => {
-            handelRemove(index); //index coming from map func from where its called Cart.js
-          }}
-        >
-          Remove
-        </button>
+
+        {/* Item Details */}
+        <div className="flex-grow space-y-1">
+          <h3 className="text-lg font-semibold text-gray-800 tracking-tight">
+            {items.passData.name}
+          </h3>
+          <span className="font-semibold text-indigo-600 text-md">
+            ₹{parseFloat(items.passData.price).toFixed(2)}
+          </span>
+          <p className="text-sm text-gray-500 line-clamp-2">
+            {items.passData.description}
+          </p>
+        </div>
+
+        {/* Actions */}
+        <div className="ml-4 flex flex-col items-end">
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white shadow-md rounded-full p-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+            onClick={handleClick}
+          >
+            <PlusCircleIcon className="h-5 w-5" />
+          </button>
+          <button
+            className="mt-2 bg-red-500 hover:bg-red-600 text-white shadow-md rounded-full p-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
+            onClick={handelRemove}
+          >
+            <TrashIcon className="h-5 w-5" />
+          </button>
+        </div>
       </div>
-    </>
+      <ToastContainer
+        className="mt-20"
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={true}
+      />
+    </div>
   );
 }
 
