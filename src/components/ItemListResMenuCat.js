@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem, removeItem } from "../utils/cartSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,7 +24,7 @@ function ItemListResMenuCat({ items, index }) {
   };
   return (
     <>
-      <ToastContainer />
+      <ToastContainer className="mt-10" />
       <div className="border-b-2 shadow-lg rounded-md shadow-slate-500 mt-6 items-center">
         <div className="flex justify-between">
           <div className="w-3/4">

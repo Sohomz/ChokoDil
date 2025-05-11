@@ -6,10 +6,11 @@ import SearchBox from "./SearchBox";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import Font, { Text } from "react-font";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import chocolateIcon from "../images/dark-chocolate.png";
+import cartIcon from "../images/shopping-bag.png";
+import aboutUsIcon from "../images/about-us.png";
 
 const Header = () => {
-  const [loginBtn, setLoginBtn] = useState(false);
   const cartItems = useSelector((store) => store.cart.items);
   const location = useLocation();
   const [isMobileView, setIsMobileView] = useState(false);
@@ -61,9 +62,15 @@ const Header = () => {
         />
         {location.pathname === "/filteredList" ? (
           <SearchBox isMenuOpen={isMenuOpen} />
-        ) : (
+        ) : !isMobileView ? (
           <Font className="lg:mr-16 sm:mr-10 md:mr-10 select-none">
             <Text family="Monoton" className="tracking-widest text-3xl">
+              CraftyKoKo
+            </Text>
+          </Font>
+        ) : (
+          <Font className="lg:mr-16 sm:mr-10 md:mr-10 select-none">
+            <Text family="Monoton" className="tracking-widest text-2xl">
               CraftyKoKo
             </Text>
           </Font>
@@ -72,6 +79,23 @@ const Header = () => {
         {isMobileView ? (
           // Mobile View
           <div className="flex items-center justify-end">
+            <div className="p-4">
+              <Link to="/">
+                <img className="h-10" src={chocolateIcon}></img>
+              </Link>
+            </div>
+            <button className="p-4">
+              <Link to="/Cart" className="flex items-center">
+                <div className="relative mr-1">
+                  <div className="scale-150">
+                    <img className="h-6" src={cartIcon}></img>
+                  </div>
+                  <span className="absolute -top-2 left-3 m-2 rounded-full bg-red-500 px-1 text-xs text-red-50">
+                    {cartItems.length}
+                  </span>
+                </div>
+              </Link>
+            </button>
             <button
               onClick={toggleMenu} //function to toggle if menu is open or closed. If open then mobile view, elsedesktop
               className="text-black text-2xl focus:outline-none"
@@ -82,51 +106,33 @@ const Header = () => {
             {isMenuOpen && (
               <ul className="absolute inset-y-0 left-0 top-20 bg-slate-50 shadow-lg py-4 px-6 flex flex-col space-y-4 w-1/2 h-screen transition-transform transform translate-x-0">
                 <li className="hover:bg-slate-200 shadow-md p-4">
-                  <Link to="/">Menu</Link>
-                </li>
-                <li className="hover:bg-slate-200 shadow-md p-4">
-                  <Link to="/Cart" className="flex items-center">
-                    <div className="relative mr-1">
-                      <div className="scale-150">
-                        <AiOutlineShoppingCart />
-                      </div>
-                      <span className="absolute -top-2 left-3 m-2 rounded-full bg-red-500 px-1 text-xs text-red-50">
-                        {cartItems.length}
-                      </span>
-                    </div>
+                  <Link to="/About">
+                    <li className="hover:bg-slate-200  p-4">About us</li>
                   </Link>
                 </li>
                 <li className="hover:bg-slate-200 shadow-md p-4">
-                  <Link to="/About">About Us</Link>
+                  <Link to="/About">
+                    <li className="hover:bg-slate-200  p-4">Contact us</li>
+                  </Link>
                 </li>
-                <li className="hover:bg-slate-200 shadow-md p-4">Contact</li>
               </ul>
             )}
           </div>
         ) : (
           // Desktop View
           <ul className="nav font-semibold flex ml-4 mr-4 space-x-10 justify-end items-center cursor-pointer text-black">
-            <li className="bg-white text-pink-500 font-semibold py-2 px-4 rounded-lg shadow-lg hover:shadow-indigo-500/50">
-              <Link to="/">Menu</Link>
+            <li>
+              <Link to="/">
+                <img className="h-10" src={chocolateIcon}></img>
+              </Link>
             </li>
             <li className="flex">
               <Link to="/Cart">
                 <div className="mr-1">
                   <div className="relative scale-75">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="h-12 w-8 text-black"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-                      />
-                    </svg>
+                    <div className="scale-150">
+                      <img className="h-7" src={cartIcon}></img>
+                    </div>
                     <span className="absolute -top-2 left-4 rounded-full bg-red-500 p-0.5 px-2 text-sm text-red-50">
                       {cartItems.length}
                     </span>
@@ -134,10 +140,12 @@ const Header = () => {
                 </div>
               </Link>
             </li>
-            <li className="hover:bg-slate-200  p-4">
-              <Link to="/About">About Us</Link>
+            <li className="p-4">
+              <Link to="/About">
+                <img className="h-10" src={aboutUsIcon}></img>
+              </Link>
             </li>
-            <li className="hover:bg-slate-200  p-4">Contact</li>
+            <li className="hover:bg-slate-200  p-4">Contact us</li>
           </ul>
         )}
       </div>

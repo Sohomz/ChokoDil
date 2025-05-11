@@ -104,7 +104,7 @@ function CreateItem() {
 
   return (
     <div className="flex items-center justify-center min-h-screen mt-20 bg-gradient-to-r from-pink-400 via-purple-400 to-white">
-      <ToastContainer />
+      <ToastContainer className="mt-10" />
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
         <h1 className="text-lg font-bold mb-6 text-center text-purple-600">
           Create Item

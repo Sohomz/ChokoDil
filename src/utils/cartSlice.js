@@ -11,7 +11,7 @@ const cartSlice = createSlice({
       state.items.push(action.payload);
     },
     removeItem: (state, action) => {
-      const { index } = action.payload; // Extract both values
+      const { index } = action.payload;
 
       if (index >= 0 && index < state.items.length) {
         state.items.splice(index, 1);

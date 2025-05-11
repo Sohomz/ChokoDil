@@ -41,7 +41,7 @@ const Card = (props) => {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer className="mt-20" />
       <div className="card-items mt-10 w-80 bg-white border-2 border-magenta-500 rounded-lg shadow-lg shadow-slate-600 transition-transform duration-300 hover:scale-105">
         <div className="relative">
           {!imageLoaded && (

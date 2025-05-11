@@ -51,7 +51,7 @@ const SearchBox = ({ isMenuOpen }) => {
   };
 
   return (
-    <div className={`ml-10 w-1/2`}>
+    <div className={`ml-6 w-5/12`}>
       <div className="relative">
         <div className="flex">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
