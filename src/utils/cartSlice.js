@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import "react-toastify/dist/ReactToastify.css";
 
+// Load cart items from localStorage on initial load
+const storedCartItems = localStorage.getItem("cartItems");
+const initialState = {
+  items: storedCartItems ? JSON.parse(storedCartItems) : [],
+};
+
 const cartSlice = createSlice({
   name: "cart",
-  initialState: {
-    items: [],
-  },
+  initialState,
   reducers: {
     addItem: (state, action) => {
       state.items.push(action.payload);

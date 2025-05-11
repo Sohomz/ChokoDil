@@ -24,7 +24,7 @@ function ItemListResMenuCat({ items, index }) {
   };
   return (
     <>
-      <ToastContainer className="mt-10" />
+      <ToastContainer className="mt-20" />
       <div className="border-b-2 shadow-lg rounded-md shadow-slate-500 mt-6 items-center">
         <div className="flex justify-between">
           <div className="w-3/4">

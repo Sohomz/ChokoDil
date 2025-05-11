@@ -70,7 +70,7 @@ function itemsTable() {
 
   return (
     <div className="mt-24 min-h-screen relative overflow-x-auto shadow-md sm:rounded-lg">
-      <ToastContainer className="mt-10" />
+      <ToastContainer className="mt-20" />
       <table className="w-full text-sm text-left text-gray-600">
         <thead className="text-xs text-black uppercase bg-gray-50 border border-b-2">
           <tr>

@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ItemListResMenuCat from "./ItemListResMenuCat";
 import { clearCart } from "../utils/cartSlice";
@@ -15,6 +14,11 @@ function Cart() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    // Save cartItems to localStorage whenever it changes
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   return (
     <div className="mt-24 text-center p-10 min-h-screen">
