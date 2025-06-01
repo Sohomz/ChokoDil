@@ -2,8 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { db } from "../firebase-config.js";
+import { collection, addDoc } from "firebase/firestore";
 
 function CreateItem() {
+  const menuItemsCollectionRef = collection(db, "craftyKoKoItemsTable");
+
   const [formData, setFormData] = useState({
     namee: "",
     description: "",
@@ -19,25 +23,25 @@ function CreateItem() {
     image: "",
   });
 
-  const generateId = (category, subCategory) => {
-    // Get current date and time
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are zero-based, pad with 0
-    const day = String(now.getDate()).padStart(2, "0");
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const milliseconds = String(now.getMilliseconds())
-      .padStart(3, "0")
-      .slice(0, 2); // Limit to first 2 digits
+  // const generateId = (category, subCategory) => {
+  //   // Get current date and time
+  //   const now = new Date();
+  //   const year = now.getFullYear();
+  //   const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are zero-based, pad with 0
+  //   const day = String(now.getDate()).padStart(2, "0");
+  //   const hours = String(now.getHours()).padStart(2, "0");
+  //   const minutes = String(now.getMinutes()).padStart(2, "0");
+  //   const milliseconds = String(now.getMilliseconds())
+  //     .padStart(3, "0")
+  //     .slice(0, 2); // Limit to first 2 digits
 
-    // Generate ID
-    const id = `${category.charAt(0)}${subCategory.substring(
-      0,
-      2
-    )}${year}${month}${day}${hours}${minutes}${milliseconds}`;
-    return id;
-  };
+  //   // Generate ID
+  //   const id = `${category.charAt(0)}${subCategory.substring(
+  //     0,
+  //     2
+  //   )}${year}${month}${day}${hours}${minutes}${milliseconds}`;
+  //   return id;
+  // };
 
   const clearData = () => {
     setFormData({
@@ -68,10 +72,10 @@ function CreateItem() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = "https://localhost:7051/api/MenuItem";
+    // const url = "https://localhost:7051/api/MenuItem";
 
     const passingData = {
-      id: generateId(formData.category, formData.subCategory), // Correct field name
+      //id: generateId(formData.category, formData.subCategory), // Correct field name
       name: formData.namee, // 'name' matches the API spec
       description: formData.description,
       price: parseFloat(formData.price), // 'price' as a number
@@ -87,13 +91,15 @@ function CreateItem() {
     };
 
     try {
-      const response = await axios.post(url, passingData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      toast.success("Item added to the list");
+      // const response = await axios.post(url, passingData, {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
 
+      addDoc(menuItemsCollectionRef, passingData);
+
+      toast.success("Item added to the list");
       clearData();
     } catch (error) {
       toast.error("Failed to add the item.");
