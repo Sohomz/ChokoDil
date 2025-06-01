@@ -29,7 +29,7 @@ const Card = (props) => {
   const nullStar = images.TOTAL_STARS - (fullStar + halfStar);
   const [imageLoaded, setImageLoaded] = useState(false);
   const dispatch = useDispatch();
-  const originalPrice = price / ((100 - offer) / 100);
+  const originalPrice = Math.ceil(price / ((100 - offer) / 100));
 
   const handleAdd = () => {
     try {

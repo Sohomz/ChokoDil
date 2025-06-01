@@ -1,16 +1,16 @@
-import axios from "axios";
+//
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+// No need for axios here if you're handling the update in the parent via Firebase
+// No need for toast here as well, as the parent will manage it.
 
 function WantToEdit({
   showPopup,
   closePopup,
   initialData,
   saveChanges,
-  editID,
+  // editID is not directly used in this component for API calls anymore
 }) {
   const [formData, setFormData] = useState({
-    //error was coming due to undefined values --> uncontrolled, so initialized everyone.
     id: "",
     name: "",
     description: "",
@@ -30,15 +30,15 @@ function WantToEdit({
   useEffect(() => {
     if (initialData) {
       setFormData({
-        id: initialData.id || "", // Use correct casing
-        name: initialData.name || "", // Ensure matching keys
+        id: initialData.id || "",
+        name: initialData.name || "",
         description: initialData.description || "",
-        price: isNaN(initialData.price) ? 0 : parseFloat(initialData.price), // Convert to number
+        price: isNaN(initialData.price) ? 0 : parseFloat(initialData.price),
         quantity: isNaN(initialData.quantity)
           ? 0
           : parseFloat(initialData.quantity),
-        isVeg: initialData.isVeg || 0, // Use directly as received
-        isAvailable: initialData.isAvailable || 0,
+        isVeg: initialData.isVeg, // Keep as boolean or 0/1 as received from parent
+        isAvailable: initialData.isAvailable, // Keep as boolean or 0/1 as received from parent
         category: initialData.category || "",
         subCategory: initialData.subCategory || "",
         offer: isNaN(initialData.offer) ? 0 : parseInt(initialData.offer, 10),
@@ -54,34 +54,29 @@ function WantToEdit({
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
-      setFormData({ ...formData, [name]: checked ? 1 : 0 }); // Convert checkbox to integer (0/1)
+      // If initialData.isVeg was boolean, pass boolean back
+      // If initialData.isVeg was 0/1, pass 0/1 back
+      // The parent's saveChanges will convert to 0/1 for Firebase if needed.
+      setFormData({ ...formData, [name]: checked }); // Store as boolean internally
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
 
-  const handleSave = async (e) => {
+  const handleSave = (e) => {
+    // Made async unnecessary here as it doesn't await anything internally
     e.preventDefault();
-    await axios
-      .put(`https://localhost:7051/api/MenuItem/${editID}`, formData, {
-        //pass the updated formData onChange
-        headers: {
-          "Content-Type": "application/json", // Ensure JSON data format
-        },
-      })
-      .then((result) => {
-        if (result.status === 200) {
-          toast.success("Item updated successfully");
-        }
-      })
-      .catch((err) => {
-        toast.error(
-          `Error: ${err.response?.data || "Failed to update the data"}`
-        );
-      });
-
-    saveChanges(formData); // Call the save function with updated data
+    // This component's only job is to pass the updated data to the parent
+    // The parent's `saveChanges` function will handle the actual update and toasts.
+    saveChanges(formData);
+    // The closePopup will be called by the parent after successful save.
+    // So you can remove it from here if the parent always closes on success.
+    // If you want to close on any submission (even if parent fails), keep it.
+    // For now, let's let the parent control closing upon successful update.
+    closePopup(); // Keep for now, but parent can manage if preferred.
   };
+
+  if (!showPopup) return null;
 
   return (
     <div
@@ -117,10 +112,12 @@ function WantToEdit({
             </div>
           </div>
 
-          {/* Price and Quantity */}
+          {/* Price */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium">Price:</label>
+              <label className="block text-sm font-medium">
+                Current Price:
+              </label>
               <input
                 type="number"
                 name="price"
@@ -130,6 +127,10 @@ function WantToEdit({
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
               />
             </div>
+          </div>
+
+          {/* Quantity and Veg/Non-Veg */}
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium">Quantity:</label>
               <input
@@ -141,41 +142,39 @@ function WantToEdit({
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
               />
             </div>
+            <div className="flex items-center mt-6">
+              {" "}
+              {/* Adjusted margin for alignment */}
+              <input
+                type="checkbox"
+                name="isVeg"
+                checked={!!formData.isVeg} // Cast to boolean for checked prop
+                onChange={handleChange}
+                className="mr-2 h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+              />
+              <label className="text-sm font-medium">Is Vegetarian?</label>
+            </div>
           </div>
 
-          {/* Veg/Non-Veg and Available */}
+          {/* Available and Category */}
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center">
               <input
                 type="checkbox"
-                name="isVeg"
-                checked={formData.isVeg === 1}
-                onChange={handleChange}
-                className="mr-2"
-              />
-              <label className="text-sm font-medium">Veg/Non-Veg</label>
-            </div>
-            <div className="flex items-center">
-              <input
-                type="checkbox"
                 name="isAvailable"
-                checked={formData.isAvailable === 1}
+                checked={!!formData.isAvailable} // Cast to boolean for checked prop
                 onChange={handleChange}
-                className="mr-2"
+                className="mr-2 h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
               />
-              <label className="text-sm font-medium">Available</label>
+              <label className="text-sm font-medium">Is Available?</label>
             </div>
-          </div>
-
-          {/* Category and Subcategory */}
-          <div className="flex items-center gap-2">
-            <>
+            <div>
               <label className="block text-sm font-medium">Category:</label>
               <select
                 name="category"
                 value={formData.category || ""}
                 onChange={handleChange}
-                className="border rounded-lg focus:ring focus:ring-purple-300 py-2"
+                className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
               >
                 <option value="" disabled>
                   Select Category
@@ -186,23 +185,22 @@ function WantToEdit({
                 <option value="mousse">Mousse</option>
                 <option value="small chocolate">Small chocolate</option>
               </select>
-
-              <label className="block text-sm font-medium">Sub-Category:</label>
-              <div>
-                <input
-                  name="subCategory"
-                  value={formData.subCategory}
-                  onChange={handleChange}
-                  className="border py-2 rounded-lg focus:ring focus:ring-purple-300 w-full"
-                  type="text"
-                  required
-                />
-              </div>
-            </>
+            </div>
           </div>
 
-          {/* Offer and Days to Deliver */}
+          {/* Subcategory and Offer */}
           <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium">Sub-Category:</label>
+              <input
+                name="subCategory"
+                value={formData.subCategory || ""}
+                onChange={handleChange}
+                className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
+                type="text"
+                required
+              />
+            </div>
             <div>
               <label className="block text-sm font-medium">Offer %:</label>
               <input
@@ -215,6 +213,10 @@ function WantToEdit({
                 className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
               />
             </div>
+          </div>
+
+          {/* Days to Deliver and Rating */}
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium">
                 Days to Deliver:
@@ -229,7 +231,12 @@ function WantToEdit({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Rating</label>
+              <label className="block text-sm font-medium">
+                Rating:{" "}
+                <span className="ml-2 text-sm font-bold text-purple-600">
+                  {formData.rating}
+                </span>
+              </label>
               <input
                 type="range"
                 name="rating"
@@ -239,23 +246,20 @@ function WantToEdit({
                 value={formData.rating || 0}
                 onChange={handleChange}
                 className="w-full cursor-pointer appearance-none h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg"
-                e="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
-              />
-              <span className="ml-2 text-sm font-bold text-purple-600">
-                {formData.rating}
-              </span>
-            </div>
-            {/* Image Upload */}
-            <div>
-              <label className="block text-sm font-medium">Image URL:</label>
-              <input
-                type="text"
-                name="image"
-                value={formData.image || ""}
-                onChange={handleChange}
-                className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
               />
             </div>
+          </div>
+
+          {/* Image URL */}
+          <div>
+            <label className="block text-sm font-medium">Image URL:</label>
+            <input
+              type="text"
+              name="image"
+              value={formData.image || ""}
+              onChange={handleChange}
+              className="px-3 py-2 border rounded-lg focus:ring focus:ring-purple-300 w-full"
+            />
           </div>
 
           {/* Buttons */}
