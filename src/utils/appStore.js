@@ -19,4 +19,18 @@ const appstore = configureStore({
   },
 });
 
+// Function to save cart to localStorage
+const saveState = (state) => {
+  try {
+    const serializedState = JSON.stringify(state.cart.items); // Only save cart items
+    localStorage.setItem("cartItems", serializedState);
+  } catch (e) {
+    console.warn("Could not save state to localStorage", e);
+  }
+};
+
+appstore.subscribe(() => {
+  saveState(appstore.getState());
+});
+
 export default appstore;

@@ -1,14 +1,47 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { db } from "../firebase-config.js";
+import { collection, getDocs } from "firebase/firestore";
+
+// Helper function to extract and flatten Firestore data
+// This function takes a raw Firestore QueryDocumentSnapshot
+// and returns a clean, plain JavaScript object
+const extractItemData = (docSnapshot) => {
+  // Access the actual fields data using the structure you've been working with
+  const fields = docSnapshot._document.data.value.mapValue.fields;
+
+  return {
+    // It's good practice to include the Firestore document ID
+    id: docSnapshot.id,
+    // Extract and convert each field to its simple JavaScript type
+    offer: parseInt(fields.offer.integerValue) || fields.offer.doubleValue,
+    name: fields.name.stringValue,
+    price: fields.price.integerValue || fields.price.doubleValue,
+    category: fields.category.stringValue,
+    daysToDeliver:
+      parseInt(fields.daysToDeliver.integerValue) ||
+      fields.daysToDeliver.doubleValue,
+    quantity:
+      parseInt(fields.quantity.integerValue) || fields.quantity.doubleValue,
+    isVeg: parseInt(fields.isVeg.integerValue) === 1,
+    subCategory: fields.subCategory.stringValue,
+    rating: parseInt(fields.rating.integerValue) || fields.rating.doubleValue,
+    image: fields.image.stringValue,
+    description: fields.description.stringValue,
+    isAvailable: parseInt(fields.isAvailable.integerValue) === 1,
+  };
+};
 
 // Async thunk for API fetching
 export const fetchRestaurants = createAsyncThunk(
   "restaurants/fetchRestaurants",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("https://localhost:7051/api/MenuItem");
-      const json = await response.json();
-      return json;
+      const menuItemsCollectionRef = collection(db, "craftyKoKoItemsTable");
+      const fetchData = await getDocs(menuItemsCollectionRef);
+      const transformedData = fetchData.docs.map((doc) => extractItemData(doc));
+      return transformedData; // Return the plain JavaScript objects
     } catch (error) {
+      console.error("Failed to fetch restaurants:", error);
       return rejectWithValue("Failed to fetch restaurants");
     }
   }
@@ -30,12 +63,7 @@ const restaurantSlice = createSlice({
           item.category?.toLowerCase().trim() ===
           action.payload.toLowerCase().trim()
       );
-
-      return {
-        ...state,
-        filteredList: filteredItems,
-        filteredList2nd: filteredItems,
-      };
+      state.filteredList = filteredItems;
     },
     setFilteredRestaurants: (state, action) => {
       state.filteredList = action.payload;
@@ -49,8 +77,9 @@ const restaurantSlice = createSlice({
       })
       .addCase(fetchRestaurants.fulfilled, (state, action) => {
         state.loading = false;
-        state.list = action.payload; //setting the list after getting data from API fetchRestaurants try catch
-        state.filteredList = action.payload; // Set both lists initially
+        state.list = action.payload;
+        state.filteredList = action.payload;
+        state.filteredList2nd = action.payload;
       })
       .addCase(fetchRestaurants.rejected, (state, action) => {
         state.loading = false;

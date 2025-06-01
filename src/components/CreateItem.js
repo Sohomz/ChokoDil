@@ -86,8 +86,6 @@ function CreateItem() {
       image: formData.image, // string
     };
 
-    console.log("Passing Data:", passingData);
-
     try {
       const response = await axios.post(url, passingData, {
         headers: {

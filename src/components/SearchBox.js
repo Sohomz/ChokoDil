@@ -31,7 +31,7 @@ const SearchBox = ({ isMenuOpen }) => {
       });
 
       if (filteredSearchValue.length === 0) {
-        throw new Error("No restaurant found");
+        throw new Error("No item found :( ");
       } else {
         dispatch(setFilteredRestaurants(filteredSearchValue)); // Dispatch the filtered list to Redux
         console.log(filteredSearchValue);
@@ -82,7 +82,7 @@ const SearchBox = ({ isMenuOpen }) => {
           />
         </div>
       </div>
-      <Popup message="No restaurant found" showPopup={showPopup} />
+      <Popup message="No item found :(" showPopup={showPopup} />
     </div>
   );
 };
