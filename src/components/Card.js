@@ -74,7 +74,7 @@ const Card = (props) => {
         >
           {/* Image Section */}
           <div className="relative w-full h-48 bg-gray-50 flex items-center justify-center border-b-4 border-[#333]">
-            {!imageLoaded && (
+            {(!imageLoaded || image.length == 0) && (
               <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center text-gray-400 text-sm">
                 Loading Yumminess...
               </div>
@@ -83,12 +83,16 @@ const Card = (props) => {
               className={`w-full h-full object-contain transition-opacity duration-300 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
-              src={image}
+              src={
+                image.length > 0 || image != "" || imageLoaded
+                  ? image
+                  : images.PLACEHOLDER_IMG
+              }
               alt={name}
               onLoad={() => setImageLoaded(true)}
               onError={(e) => {
                 e.target.src = images.PLACEHOLDER_IMG;
-                setImageLoaded(true);
+                setImageLoaded(false);
               }}
             />
             {offer && (
@@ -198,7 +202,7 @@ const Card = (props) => {
               </span>
             </div>
             <div>
-              {originalPrice && originalPrice > price && (
+              {offer > 0 && (
                 <span className="text-2xl text-gray-600 font-semibold relative overflow-hidden">
                   <span className="relative">
                     ₹ {parseFloat(originalPrice).toFixed(2)}
@@ -208,15 +212,16 @@ const Card = (props) => {
               )}
             </div>
 
-            <div className=" flex items-center justify-between mt-1">
-              <div className="items-baseline space-x-2">
-                <span className="text-2xl font-extrabold text-[#5A3825]">
-                  ₹{parseFloat(price).toFixed(2)}/-
-                </span>
-              </div>
+            {offer > 0 ? (
+              <div className=" flex items-center justify-between -mt-1">
+                <div className="items-baseline space-x-2">
+                  <span className="text-2xl font-extrabold text-[#5A3825]">
+                    ₹{parseFloat(price).toFixed(2)}/-
+                  </span>
+                </div>
 
-              <button
-                className="
+                <button
+                  className="
                   bg-red-600 text-white font-extrabold text-base
                   py-3 px-5 rounded-lg border-2 border-red-700
                   transition-all duration-200
@@ -224,14 +229,40 @@ const Card = (props) => {
                   focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-white
                   disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:border-gray-400 disabled:bg-gray-500
                 "
-                onClick={() => {
-                  handleAdd();
-                }}
-                disabled={!isAvailable}
-              >
-                {isAvailable ? "Add to Cart" : "Sold Out!"}
-              </button>
-            </div>
+                  onClick={() => {
+                    handleAdd();
+                  }}
+                  disabled={!isAvailable}
+                >
+                  {isAvailable ? "Add to Cart" : "Sold Out!"}
+                </button>
+              </div>
+            ) : (
+              <div className=" flex items-center justify-between mt-11">
+                <div className="items-baseline space-x-2">
+                  <span className="text-2xl font-extrabold text-[#5A3825]">
+                    ₹{parseFloat(price).toFixed(2)}/-
+                  </span>
+                </div>
+
+                <button
+                  className="
+                  bg-red-600 text-white font-extrabold text-base
+                  py-3 px-5 rounded-lg border-2 border-red-700
+                  transition-all duration-200
+                  hover:bg-red-700 hover:scale-105 active:scale-95
+                  focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-offset-2 focus:ring-offset-white
+                  disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:border-gray-400 disabled:bg-gray-500
+                "
+                  onClick={() => {
+                    handleAdd();
+                  }}
+                  disabled={!isAvailable}
+                >
+                  {isAvailable ? "Add to Cart" : "Sold Out!"}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
