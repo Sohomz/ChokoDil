@@ -73,7 +73,7 @@ function Cart() {
           <div className="space-y-4">
             {cartItems.map((item, index) => (
               <ItemListResMenuCat
-                key={item.id || index}
+                key={item.id + index || index}
                 items={item}
                 index={index}
               />

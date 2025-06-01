@@ -3,6 +3,7 @@ import { addItem, removeItem } from "../utils/cartSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"; // Using Heroicons for icons
+import nullImageIcon from "../images/nullImage.png";
 
 function ItemListResMenuCat({ items, index }) {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ function ItemListResMenuCat({ items, index }) {
   const handleClick = () => {
     try {
       dispatch(addItem(items));
-      toast.success(`${items.passData.name} added to cart!`, {
+      toast.success(`${items.name} added to cart!`, {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: true,
@@ -42,8 +43,14 @@ function ItemListResMenuCat({ items, index }) {
         {/* Image */}
         <div className="relative w-20 h-20 rounded-md overflow-hidden shadow-sm mr-4">
           <img
-            src={items.passData.image}
-            alt={items.passData.name}
+            src={
+              typeof items.image === undefined ||
+              items.image === null ||
+              items.image == ""
+                ? nullImageIcon
+                : items.image
+            }
+            alt={items.name}
             className="w-full h-full object-cover"
           />
         </div>
@@ -51,13 +58,13 @@ function ItemListResMenuCat({ items, index }) {
         {/* Item Details */}
         <div className="flex-grow space-y-1">
           <h3 className="text-lg font-semibold text-gray-800 tracking-tight">
-            {items.passData.name}
+            {items.name}
           </h3>
           <span className="font-semibold text-indigo-600 text-md">
-            ₹{parseFloat(items.passData.price).toFixed(2)}
+            ₹{parseFloat(items.price).toFixed(2)}
           </span>
           <p className="text-sm text-gray-500 line-clamp-2">
-            {items.passData.description}
+            {items.description}
           </p>
         </div>
 
