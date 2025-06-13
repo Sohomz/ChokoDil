@@ -31,7 +31,7 @@ const extractItemData = (docSnapshot) => {
   };
 };
 
-// Async thunk for API fetching
+// Async thunk for API fetching, also this is used while handling if pending, fulfilled or rejected
 export const fetchRestaurants = createAsyncThunk(
   "restaurants/fetchRestaurants",
   async (_, { rejectWithValue }) => {
@@ -53,7 +53,7 @@ const restaurantSlice = createSlice({
     list: [],
     filteredList: [],
     filteredList2nd: [],
-    loading: false,
+    loading: false, // state to handle if pending, fullfilled or rejected when API call by thunk
     error: null,
   },
   reducers: {
@@ -72,16 +72,19 @@ const restaurantSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchRestaurants.pending, (state) => {
+        // if pending
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchRestaurants.fulfilled, (state, action) => {
+        //if success
         state.loading = false;
         state.list = action.payload;
         state.filteredList = action.payload;
         state.filteredList2nd = action.payload;
       })
       .addCase(fetchRestaurants.rejected, (state, action) => {
+        //if rejected
         state.loading = false;
         state.error = action.payload;
       });

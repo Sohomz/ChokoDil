@@ -56,18 +56,12 @@ function ItemsTable() {
     try {
       const fetchData = await getDocs(menuItemsCollectionRef);
       const transformedData = fetchData.docs.map((doc) => ({
-        id: doc.id, // Ensure id is always present
-        ...doc.data(), // Get the actual data fields as a plain object
-        // You might need to adjust data types here if Firebase stores numbers as strings etc.
-        // For example, if 'price' is stored as a string, you might convert it here:
-        // price: parseFloat(doc.data().price),
-        // offer: parseInt(doc.data().offer, 10),
-        // etc.
+        id: doc.id,
+        ...doc.data(),
       }));
-      // Let's refine the mapping to match your `extractItemData` output format
-      // but using the standard `doc.data()` for simplicity unless your Firestore setup is truly unusual.
+      //Firestore setup
       const transformedDataRefined = fetchData.docs.map((docSnapshot) => {
-        const data = docSnapshot.data(); // Standard way to get document data
+        const data = docSnapshot.data();
         return {
           id: docSnapshot.id,
           offer:
@@ -103,7 +97,7 @@ function ItemsTable() {
           isAvailable:
             typeof data.isAvailable === "number"
               ? data.isAvailable === 1
-              : data.isAvailable, // Assuming boolean or 1/0
+              : data.isAvailable,
         };
       });
       setData(transformedDataRefined);
@@ -115,22 +109,20 @@ function ItemsTable() {
 
   const handleEdit = async (id) => {
     console.log("Editing item with ID:", id);
-    setEditID(id); // Set the ID of the item being edited
+    setEditID(id);
 
     try {
-      const docRef = doc(db, "craftyKoKoItemsTable", id); // Create a document reference
-      const docSnap = await getDoc(docRef); // Fetch the specific document
+      const docRef = doc(db, "craftyKoKoItemsTable", id);
+      const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        const itemData = docSnap.data(); // Get the data as a plain object
-        // Transform the data to match your `editingItem` state structure if necessary
-        // Ensure booleans (isVeg, isAvailable) are correct, and numbers are parsed.
+        const itemData = docSnap.data();
         setEditingItem({
           id: docSnap.id,
           name: itemData.name || "",
           description: itemData.description || "",
           price: parseFloat(itemData.price) || 0,
-          originalPrice: parseFloat(itemData.originalPrice) || null, // Ensure originalPrice is handled
+          originalPrice: parseFloat(itemData.originalPrice) || null,
           quantity: parseFloat(itemData.quantity) || 0,
           isVeg:
             typeof itemData.isVeg === "number"
@@ -147,7 +139,7 @@ function ItemsTable() {
           rating: parseFloat(itemData.rating) || 0,
           image: itemData.image || "",
         });
-        setShowWantEdit(true); // Show the edit popup
+        setShowWantEdit(true);
       } else {
         console.error("No such document!");
         toast.error("Item not found.");
@@ -158,9 +150,7 @@ function ItemsTable() {
     }
   };
 
-  // NEW: Function to handle saving changes from the WantToEdit component
   const saveChanges = async (updatedData) => {
-    // Before attempting the update, show a pending/loading toast
     const updateToastId = toast.info("Updating item...", {
       autoClose: false,
       closeButton: false,
@@ -168,14 +158,11 @@ function ItemsTable() {
 
     setTimeout(async () => {
       try {
-        const itemDocRef = doc(db, "craftyKoKoItemsTable", editID); // Use the stored editID
-
-        // Prepare data for Firestore: Convert booleans back to 0/1 if that's your schema
+        const itemDocRef = doc(db, "craftyKoKoItemsTable", editID);
         const dataToUpdate = {
           ...updatedData,
           isVeg: updatedData.isVeg ? 1 : 0,
           isAvailable: updatedData.isAvailable ? 1 : 0,
-          // Ensure numbers are properly parsed, even if they come as strings from the form
           price: parseFloat(updatedData.price) || 0,
           originalPrice: updatedData.originalPrice
             ? parseFloat(updatedData.originalPrice)
@@ -189,24 +176,24 @@ function ItemsTable() {
         // Remove the `id` field from dataToUpdate as it's part of the doc reference, not the document itself
         delete dataToUpdate.id;
 
-        await updateDoc(itemDocRef, dataToUpdate); // Perform the update
+        await updateDoc(itemDocRef, dataToUpdate); //update
 
         toast.update(updateToastId, {
           render: "Item updated successfully!",
           type: "success",
-          autoClose: 3000, // Close after 3 seconds
+          autoClose: 3000,
           closeButton: true,
           isLoading: false,
         });
 
-        setShowWantEdit(false); // Close the popup
-        getData(); // Refresh the table data
+        setShowWantEdit(false);
+        getData(); //refresh table data
       } catch (error) {
         console.error("Error updating document:", error);
         toast.update(updateToastId, {
           render: "Failed to update item!",
           type: "error",
-          autoClose: 5000, // Keep error messages visible longer
+          autoClose: 5000,
           closeButton: true,
           isLoading: false,
         });
@@ -282,16 +269,13 @@ function ItemsTable() {
           ) : (
             <tr>
               <td colSpan="3">
-                {" "}
-                {/* Adjust colSpan to cover all columns */}
                 <Shimmer />
               </td>
             </tr>
           )}
         </tbody>
       </table>
-      {/* Pass saveChanges and initialData to WantToEdit */}
-      {showWantToEdit && ( // Only render WantToEdit when showWantToEdit is true
+      {showWantToEdit && (
         <WantToEdit
           showPopup={showWantToEdit}
           closePopup={() => setShowWantEdit(false)}

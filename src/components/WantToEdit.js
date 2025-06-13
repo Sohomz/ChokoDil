@@ -3,13 +3,7 @@ import React, { useState, useEffect } from "react";
 // No need for axios here if you're handling the update in the parent via Firebase
 // No need for toast here as well, as the parent will manage it.
 
-function WantToEdit({
-  showPopup,
-  closePopup,
-  initialData,
-  saveChanges,
-  // editID is not directly used in this component for API calls anymore
-}) {
+function WantToEdit({ showPopup, closePopup, initialData, saveChanges }) {
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -26,7 +20,7 @@ function WantToEdit({
     image: "",
   });
 
-  // Sync formData with initialData whenever initialData changes
+  //sync formData with initialData whenever initialData changes
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -37,8 +31,8 @@ function WantToEdit({
         quantity: isNaN(initialData.quantity)
           ? 0
           : parseFloat(initialData.quantity),
-        isVeg: initialData.isVeg, // Keep as boolean or 0/1 as received from parent
-        isAvailable: initialData.isAvailable, // Keep as boolean or 0/1 as received from parent
+        isVeg: initialData.isVeg,
+        isAvailable: initialData.isAvailable,
         category: initialData.category || "",
         subCategory: initialData.subCategory || "",
         offer: isNaN(initialData.offer) ? 0 : parseInt(initialData.offer, 10),
@@ -49,31 +43,21 @@ function WantToEdit({
         image: initialData.image || "",
       });
     }
-  }, [initialData]); // Trigger useEffect whenever initialData changes
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
-      // If initialData.isVeg was boolean, pass boolean back
-      // If initialData.isVeg was 0/1, pass 0/1 back
-      // The parent's saveChanges will convert to 0/1 for Firebase if needed.
-      setFormData({ ...formData, [name]: checked }); // Store as boolean internally
+      setFormData({ ...formData, [name]: checked });
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
 
   const handleSave = (e) => {
-    // Made async unnecessary here as it doesn't await anything internally
     e.preventDefault();
-    // This component's only job is to pass the updated data to the parent
-    // The parent's `saveChanges` function will handle the actual update and toasts.
     saveChanges(formData);
-    // The closePopup will be called by the parent after successful save.
-    // So you can remove it from here if the parent always closes on success.
-    // If you want to close on any submission (even if parent fails), keep it.
-    // For now, let's let the parent control closing upon successful update.
-    closePopup(); // Keep for now, but parent can manage if preferred.
+    closePopup();
   };
 
   if (!showPopup) return null;
@@ -143,8 +127,6 @@ function WantToEdit({
               />
             </div>
             <div className="flex items-center mt-6">
-              {" "}
-              {/* Adjusted margin for alignment */}
               <input
                 type="checkbox"
                 name="isVeg"
