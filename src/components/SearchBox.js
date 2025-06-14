@@ -34,7 +34,6 @@ const SearchBox = ({ isMenuOpen }) => {
         throw new Error("No item found :( ");
       } else {
         dispatch(setFilteredRestaurants(filteredSearchValue)); // Dispatch the filtered list to Redux
-        console.log(filteredSearchValue);
         setError(false);
         setShowPopup(false);
       }

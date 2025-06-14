@@ -63,6 +63,7 @@ const restaurantSlice = createSlice({
           action.payload.toLowerCase().trim()
       );
       state.filteredList = filteredItems;
+      state.filteredList2nd = filteredItems;
     },
     setFilteredRestaurants: (state, action) => {
       state.filteredList = action.payload;
