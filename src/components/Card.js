@@ -121,8 +121,6 @@ const CardModernWhite = (props) => {
 
           {/* Content Section */}
           <div className="p-5 flex flex-col justify-between h-[calc(100%-12rem)]">
-            {" "}
-            {/* Added flex column for spacing control */}
             <div className="flex justify-between items-start mb-2">
               <h1 className="text-xl font-extrabold text-gray-900 leading-tight pr-2">
                 {name}

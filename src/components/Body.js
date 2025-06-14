@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Body = () => {
   // Check online status
   const onlineOfflineStatus = useOnlineStatus();
+  //HOC
   const RestaurantCardOnline = withOnlineLabel(Card);
   const { filteredList, loading, error } = useSelector(
     (state) => state.restaurants

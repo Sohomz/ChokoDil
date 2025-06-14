@@ -71,12 +71,9 @@ const Header = () => {
         />
       </Link>
 
-      {/* Main Title / Search Box (Conditional rendering based on path and view) */}
+      {/* Search Box (Conditional rendering based on path and view) */}
       {location.pathname === "/filteredList" ? (
-        // SearchBox is relevant only on /filteredList. Adjust its mobile behavior if needed.
         <div className="flex-grow max-w-lg mx-4">
-          {" "}
-          {/* Constrain width and add horizontal margin */}
           <SearchBox isMenuOpen={isMenuOpen} />
         </div>
       ) : (
@@ -227,12 +224,10 @@ const Header = () => {
                 {/* Placeholder for contact icon if you have one */}
                 <span className="h-6 w-6 mr-3 flex items-center justify-center">
                   📞
-                </span>{" "}
-                {/* Example icon */}
+                </span>
                 Contact Us
               </Link>
             </li>
-            {/* Add more mobile menu items here */}
           </ul>
         </div>
       )}

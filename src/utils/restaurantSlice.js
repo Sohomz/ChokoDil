@@ -41,7 +41,6 @@ export const fetchRestaurants = createAsyncThunk(
       const transformedData = fetchData.docs.map((doc) => extractItemData(doc));
       return transformedData; // Return the plain JavaScript objects
     } catch (error) {
-      console.error("Failed to fetch restaurants:", error);
       return rejectWithValue("Failed to fetch restaurants");
     }
   }
