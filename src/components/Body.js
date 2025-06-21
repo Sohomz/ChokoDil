@@ -41,7 +41,7 @@ const Body = () => {
 
   useEffect(() => {
     if (!filteredList || filteredList.length === 0) {
-      nav("/");
+      nav("/ChokoDil");
     }
   });
 

@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="mx-auto max-w-screen-xl">
         <div className="flex flex-col md:flex-row md:justify-between md:items-start space-y-8 md:space-y-0">
           <div className="flex flex-col items-center md:items-start mb-8 md:mb-0">
-            <Link to="/" className="flex items-center">
+            <Link to="/ChokoDil" className="flex items-center">
               <img
                 src={images.LOGO_IMG}
                 className="h-12 w-12 mr-3 object-contain"
@@ -31,7 +31,10 @@ const Footer = () => {
               </h3>
               <ul className="text-gray-600 space-y-2">
                 <li>
-                  <Link to="/" className="hover:text-red-600 transition-colors">
+                  <Link
+                    to="/ChokoDil"
+                    className="hover:text-red-600 transition-colors"
+                  >
                     Home
                   </Link>
                 </li>
@@ -98,7 +101,10 @@ const Footer = () => {
         <div className="flex flex-col sm:flex-row sm:justify-between items-center text-center sm:text-left space-y-4 sm:space-y-0">
           <span className="text-sm text-gray-600">
             © {currentYear}{" "}
-            <Link to="/" className="text-red-500 hover:underline font-semibold">
+            <Link
+              to="/ChokoDil"
+              className="text-red-500 hover:underline font-semibold"
+            >
               ChocoDil™
             </Link>
             . All Rights Reserved.

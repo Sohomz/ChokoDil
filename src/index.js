@@ -49,8 +49,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Router>
     <Routes>
-      <Route path="/" element={<AppLayout />}>
-        <Route path="/" element={<LandingPage />} />
+      <Route path="/ChokoDil" element={<AppLayout />}>
+        <Route path="/ChokoDil" element={<LandingPage />} />
         <Route path="/About" element={<About />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/resturants/:resId" element={<ResturantMenu />} />
