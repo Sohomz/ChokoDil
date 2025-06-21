@@ -8,7 +8,6 @@ const SearchBox = ({ isMenuOpen }) => {
   const [error, setError] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const dispatch = useDispatch();
-  const listToUpdate = useSelector((state) => state.restaurants.filteredList); // Fetch the full list from Redux
   const listToUpdateBackup = useSelector(
     (state) => state.restaurants.filteredList2nd
   );
