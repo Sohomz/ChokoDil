@@ -66,7 +66,7 @@ const Header = () => {
       <Link to="/" className="flex-shrink-0">
         <img
           src={images.LOGO_IMG}
-          alt="CraftyKoKo Logo"
+          alt="CocoDil Logo"
           className="select-none w-[60px] h-[60px] md:w-[70px] md:h-[70px] object-contain" // Responsive sizing for logo
         />
       </Link>
@@ -79,7 +79,7 @@ const Header = () => {
       ) : (
         // Title for other pages
         <h1 className="font-semibold text-xl md:text-3xl ml-4 md:ml-12 flex-grow text-left">
-          CraftyKoKo
+          ChocoDil
         </h1>
       )}
 

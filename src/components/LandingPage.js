@@ -51,7 +51,7 @@ const testimonials = [
   },
   {
     quote:
-      "CraftyKoKo made our anniversary cake truly special. The taste was heavenly!",
+      "ChocoDil made our anniversary cake truly special. The taste was heavenly!",
     author: "Amit Singh",
     rating: 5,
   },
@@ -250,7 +250,7 @@ const LandingPage = () => {
       {/* "Why Choose Us" Section */}
       <section className="py-16 bg-gradient-to-r from-yellow-100 to-orange-100 text-center mb-12 rounded-lg shadow-lg">
         <h2 className="text-4xl font-extrabold text-gray-800 mb-10">
-          Why Choose CraftyKoKo?
+          Why Choose ChocoDil?
         </h2>
         <div className="flex flex-wrap justify-center gap-8 px-4">
           {features.map((feature, index) => (
@@ -383,7 +383,7 @@ const LandingPage = () => {
       <footer className="bg-gray-800 text-white py-8 text-center rounded-t-lg">
         <div className="container mx-auto">
           <p>
-            &copy; {new Date().getFullYear()} CraftyKoKo. All rights reserved.
+            &copy; {new Date().getFullYear()} ChocoDil. All rights reserved.
           </p>
           <p className="mt-2 text-sm">
             Crafted with <FaHeart className="inline text-red-500" /> by You.

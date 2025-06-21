@@ -14,10 +14,10 @@ const Footer = () => {
               <img
                 src={images.LOGO_IMG}
                 className="h-12 w-12 mr-3 object-contain"
-                alt="CraftyKoKo Logo"
+                alt="ChocoDil Logo"
               />
               <span className="self-center text-3xl font-bold whitespace-nowrap text-chocolate">
-                CraftyKoKo
+                ChocoDil
               </span>
             </Link>
             <p className="text-sm text-gray-600 mt-4 max-w-xs text-center md:text-left">
@@ -99,13 +99,13 @@ const Footer = () => {
           <span className="text-sm text-gray-600">
             © {currentYear}{" "}
             <Link to="/" className="text-red-500 hover:underline font-semibold">
-              CraftyKoKo™
+              ChocoDil™
             </Link>
             . All Rights Reserved.
           </span>
           <div className="flex space-x-6">
             <Link
-              to="https://www.facebook.com/your-craftykoko"
+              to="https://www.facebook.com/your-chocoDil"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-red-600 transition-colors"
