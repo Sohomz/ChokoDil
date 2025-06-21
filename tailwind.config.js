@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        chocolate: "#5A3825", // Example chocolate brown
+        chocolate: "#5A3825",
         magenta: {
           500: "#D1006B",
         },
