@@ -63,7 +63,7 @@ const Header = () => {
       className="fixed top-0 left-0 w-full z-20 shadow-lg bg-slate-100 text-black h-20 flex items-center justify-between px-4 md:px-8" // Added px-4 for default padding, md:px-8 for desktop
     >
       {/* Logo */}
-      <Link to="/ChokoDil" className="flex-shrink-0">
+      <Link to="/" className="flex-shrink-0">
         <img
           src={images.LOGO_IMG}
           alt="CocoDil Logo"
@@ -87,7 +87,7 @@ const Header = () => {
       <ul className="hidden md:flex items-center justify-between space-x-6 lg:space-x-10 text-base lg:text-lg font-semibold">
         <li>
           <Link
-            to="/ChokoDil"
+            to="/"
             className="flex flex-col items-center hover:text-gray-700 transition-colors"
           >
             <img
@@ -134,7 +134,7 @@ const Header = () => {
         <li>
           {/* Consider a Link for Contact Us as well */}
           <Link
-            to="/Contact"
+            to="/contactUs"
             className="flex flex-col items-center hover:text-gray-700 transition-colors"
           >
             <span className="text-base md:text-lg">Contact Us</span>
@@ -145,7 +145,7 @@ const Header = () => {
       {/* Mobile Hamburger/Close Icon & Mini-Nav (visible on mobile) */}
       <div className="flex items-center justify-between md:hidden">
         {/* Mobile Home Icon (if needed, otherwise remove) */}
-        <Link to="ChokoDil/">
+        <Link to="/">
           <img
             className="h-8 w-8 object-contain"
             src={chocolateIcon}
@@ -191,7 +191,7 @@ const Header = () => {
           >
             <li className="mb-4">
               <Link
-                to="/ChokoDil"
+                to="/"
                 className="flex items-center text-gray-800 hover:text-gray-600 font-semibold text-lg"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -217,7 +217,7 @@ const Header = () => {
             </li>
             <li>
               <Link
-                to="/Contact"
+                to="/contactUs"
                 className="flex items-center text-gray-800 hover:bg-slate-100 p-3 rounded-md transition-colors w-full"
                 onClick={() => setIsMenuOpen(false)}
               >

@@ -20,6 +20,9 @@ import Cart from "./components/Cart";
 import CreateItem from "./components/CreateItem";
 import ItemsTable from "./components/ItemsTable";
 import LandingPage from "./components/LandingPage";
+import { useState, useEffect } from "react";
+import ContactUs from "./components/ContactUs";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 
 const AppLayout = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -61,6 +64,8 @@ root.render(
         <Route path="/create" element={<CreateItem />} />
         <Route path="/itemsTable" element={<ItemsTable />} />
         <Route path="/filteredList" element={<Body />} />
+        <Route path="/contactUs" element={<ContactUs />} />
+        <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
 
         {/* This will catch any invalid paths *within* the /ChokoDil base */}
         <Route path="*" element={<ErrorPage />} />
