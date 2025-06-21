@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
 import {
-  BrowserRouter as Router,
+  BrowserRouter as Router, // Use BrowserRouter explicitly if you want to use basename
   Routes,
   Route,
   Outlet,
@@ -24,7 +24,6 @@ import LandingPage from "./components/LandingPage";
 const AppLayout = () => {
   const [userInfo, setUserInfo] = useState(null);
 
-  // fetch API for example, here we'll hard code
   useEffect(() => {
     const fetchedData = {
       name: "Sohom Dasss",
@@ -47,10 +46,15 @@ const AppLayout = () => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <Router>
+  // <<< KEY CHANGE 1: Add basename to Router
+  <Router basename="/ChokoDil">
     <Routes>
-      <Route path="/ChokoDil" element={<AppLayout />}>
-        <Route path="/ChokoDil" element={<LandingPage />} />
+      {/*
+        KEY CHANGE 2: The '/' route now refers to the BASE_URL (e.g., /ChokoDil).
+        Using 'index' makes LandingPage the default component when at the base path.
+      */}
+      <Route path="/" element={<AppLayout />}>
+        <Route index element={<LandingPage />} />
         <Route path="/About" element={<About />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/resturants/:resId" element={<ResturantMenu />} />
@@ -58,6 +62,7 @@ root.render(
         <Route path="/itemsTable" element={<ItemsTable />} />
         <Route path="/filteredList" element={<Body />} />
 
+        {/* This will catch any invalid paths *within* the /ChokoDil base */}
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>

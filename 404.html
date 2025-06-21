@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+      // Get the current path without the domain (e.g., '/' or '/some/invalid/path')
+      var path = window.location.pathname;
+
+      // Define your repository name (which is your app's base path)
+      var repoName = "/ChokoDil";
+
+      // Construct the target URL. We only redirect if we are *not* already on the correct base path.
+      if (!path.startsWith(repoName)) {
+        // Build the full new URL: origin + repoName (e.g., https://Sohomz.github.io/ChokoDil/)
+        var redirectUrl = window.location.origin + repoName;
+
+        // If the path is not just '/', but has some deeper path after the root domain
+        // (e.g., https://Sohomz.github.io/about should become https://Sohomz.github.io/ChokoDil/about)
+        if (path !== "/") {
+          redirectUrl += path;
+        }
+        window.location.replace(redirectUrl);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Redirecting to the application...</h1>
+    <p>
+      If you are not redirected automatically,
+      <a href="/ChokoDil/">click here</a>.
+    </p>
+  </body>
+</html>
