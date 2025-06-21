@@ -5,8 +5,8 @@
   "description": "this is to create a mock web app using demo structure",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env TEMP=G:\\craftykoko\\.tmp TMPDIR=G:\\craftykoko\\.tmp parcel index.html && parcel watch index.html",
-    "build": "cross-env TEMP=G:\\craftykoko\\.tmp TMPDIR=G:\\craftykoko\\.tmp parcel build index.html",
+    "start": "parcel index.html --cache-dir .parcel-cache",
+    "build": "cross-env TEMP=G:\\craftykoko\\.tmp TMPDIR=G:\\craftykoko\\.tmp parcel build index.html --public-url /ChokoDil/ --cache-dir .parcel-cache",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

@@ -1,8 +1,4 @@
-import User from "./User";
-import UserClass from "./UserClass";
-import React from "react";
-
-export default About = () => {
+const About = () => {
   return (
     <div className="bg-gray-50 p-8 rounded-lg shadow-lg mt-24 border-2 border-magenta-500 min-h-screen ml-5 mr-5 mb-5">
       <div className="text-base text-gray-600 leading-relaxed">
@@ -20,3 +16,5 @@ export default About = () => {
     </div>
   );
 };
+
+export default About;
