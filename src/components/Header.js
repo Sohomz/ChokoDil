@@ -74,7 +74,7 @@ const Header = () => {
 
       {/* Search Box (Conditional rendering based on path and view) */}
       {location.pathname === "/filteredList" ? (
-        <div className="flex sm:max-w-10 md:max-w-10">
+        <div className=" lg:max-w-lg xl:max-w-lg sm:max-w-10 md:max-w-10">
           <SearchBox isMenuOpen={isMenuOpen} />
         </div>
       ) : (
