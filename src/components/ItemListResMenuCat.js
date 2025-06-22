@@ -5,8 +5,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"; // Using Heroicons for icons
 import nullImageIcon from "../images/nullImage.png";
 
-function ItemListResMenuCat({ items, index }) {
+function ItemListResMenuCat({ items, id }) {
+  //id from cart.js to help in removeItem
   const dispatch = useDispatch();
+  //console.log(items);
 
   const handleClick = () => {
     try {
@@ -27,7 +29,7 @@ function ItemListResMenuCat({ items, index }) {
 
   const handelRemove = () => {
     try {
-      dispatch(removeItem({ index }));
+      dispatch(removeItem(id));
     } catch (err) {
       toast.error("Failed to remove item from cart.", {
         position: "top-right",
@@ -56,16 +58,18 @@ function ItemListResMenuCat({ items, index }) {
         </div>
 
         {/* Item Details */}
-        <div className="flex-grow space-y-1">
+        <div className="flex-grow justify-between">
           <h3 className="text-lg font-semibold text-gray-800 tracking-tight">
             {items.name}
           </h3>
           <span className="font-semibold text-indigo-600 text-md">
             ₹{parseFloat(items.price).toFixed(2)}
           </span>
-          <p className="text-sm text-gray-500 line-clamp-2">
-            {items.description}
-          </p>
+        </div>
+        <div>
+          <label className="p-5 rounded-md shadow-md">
+            Quantity {items.quantity}
+          </label>
         </div>
 
         {/* Actions */}

@@ -198,8 +198,6 @@ const LandingPage = () => {
       // Simulate API call for newsletter signup
       toast.success("Thank you for subscribing to our newsletter!");
       newsletterEmailRef.current.value = ""; // Clear input
-      // Here you would typically send the email to your backend
-      console.log("Newsletter signup:", email);
     } else {
       toast.error("Please enter a valid email address.");
     }
