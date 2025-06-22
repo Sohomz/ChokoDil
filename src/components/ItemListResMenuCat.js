@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addItem, removeItem } from "../utils/cartSlice";
+import { addItem, removeItem, removeWholeItem } from "../utils/cartSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"; // Using Heroicons for icons
@@ -39,6 +39,18 @@ function ItemListResMenuCat({ items, id, qty }) {
     }
   };
 
+  const handelRemoveWhole = () => {
+    try {
+      dispatch(removeWholeItem(id));
+    } catch (err) {
+      toast.error("Failed to remove item from cart.", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
+    }
+  };
+
   return (
     <div className="mt-4 rounded-lg shadow-md overflow-hidden bg-white border border-gray-100">
       <div className="px-5 py-4 flex items-center">
@@ -66,24 +78,32 @@ function ItemListResMenuCat({ items, id, qty }) {
             ₹{parseFloat(items.price).toFixed(2) * qty} (₹
             {parseFloat(items.price).toFixed(2)}/pcs)
           </span>
-          <div>
-            <label className="rounded-md p-1 shadow-md">Quantity {qty}</label>
-          </div>
         </div>
 
         {/* Actions */}
         <div className="ml-4 flex flex-col items-end">
+          <div className="flex items-center space-x-2 border border-gray-300 rounded-md py-1 px-2">
+            <button
+              className="text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-6 h-6 flex items-center justify-center text-lg font-bold transition-colors duration-200"
+              onClick={handelRemove}
+            >
+              -
+            </button>
+            <span className="text-lg font-semibold text-gray-800 select-none min-w-[20px] text-center">
+              {qty}
+            </span>
+            <button
+              className=" text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full w-6 h-6 flex items-center justify-center text-lg font-bold transition-colors duration-200"
+              onClick={handleClick}
+            >
+              +
+            </button>
+          </div>
           <button
-            className="bg-green-500 hover:bg-green-600 text-white shadow-md rounded-full p-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-            onClick={handleClick}
+            className="text-md font-semibold text-gray-500 select-none text-center p-4"
+            onClick={handelRemoveWhole}
           >
-            <PlusCircleIcon className="h-5 w-5" />
-          </button>
-          <button
-            className="mt-2 bg-red-500 hover:bg-red-600 text-white shadow-md rounded-full p-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
-            onClick={handelRemove}
-          >
-            <TrashIcon className="h-5 w-5" />
+            Remove
           </button>
         </div>
       </div>
