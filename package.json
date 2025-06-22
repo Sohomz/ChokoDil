@@ -9,7 +9,7 @@
     "build": "cross-env TEMP=G:\\craftykoko\\.tmp TMPDIR=G:\\craftykoko\\.tmp parcel build index.html --public-url /ChokoDil/ --cache-dir .parcel-cache",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "postbuild": "copy dist\\index.html build\\404.html"
+    "postbuild": "copy dist\\index.html dist\\404.html"
   },
   "keywords": [
     "mock",
