@@ -82,7 +82,7 @@ const CardModernWhite = (props) => {
 
   return (
     <>
-      <ToastContainer className="mt-20" />
+      <ToastContainer className="mt-36" />
       <div className="relative group p-4 animate-slideUp">
         {" "}
         {/* Added padding to the group for spacing */}

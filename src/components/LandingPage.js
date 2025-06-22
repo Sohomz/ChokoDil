@@ -207,7 +207,7 @@ const LandingPage = () => {
 
   return (
     <div className="select-none container mx-auto p-0 md:p-6 mt-0 md:mt-20 overflow-hidden">
-      <ToastContainer />
+      <ToastContainer className="mt-20" />
 
       {/* Hero Section - Carousel */}
       <section className="relative h-[calc(100vh-80px)] w-full overflow-hidden mb-12 shadow-2xl rounded-b-xl">
