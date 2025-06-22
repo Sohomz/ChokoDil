@@ -80,9 +80,11 @@ const CardModernWhite = (props) => {
         <span className="ml-2 text-sm font-semibold text-gray-700">
           ({ratingValue})
         </span>
-        <span className=" border border-green-700 p-1 ml-10">
-          {quantityInCart} item/s in cart
-        </span>
+        {quantityInCart > 0 ? (
+          <span className=" border border-green-700 p-1 ml-10">
+            {quantityInCart} item/s in cart
+          </span>
+        ) : null}
       </div>
     );
   };
