@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const PrivacyPolicy = () => {
   useEffect(() => {
@@ -175,9 +176,9 @@ const PrivacyPolicy = () => {
           </p>
           <p>
             Email:{" "}
-            <a href="#" className="text-indigo-600 hover:underline">
+            <Link href="#" className="text-indigo-600 hover:underline">
               privacy@yourcompany.com
-            </a>
+            </Link>
           </p>
           <p>Address: [for personal project]</p>
         </div>

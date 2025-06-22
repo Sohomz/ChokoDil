@@ -1,9 +1,23 @@
 import images from "../utils/contants";
 import { Link } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa"; // Importing popular social media icons
+import { FaFacebookF, FaInstagram, FaTwitter, FaHeart } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear(); // Get current year dynamically
+  const currentYear = new Date().getFullYear();
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  // Effect to determine mobile view
+  useEffect(() => {
+    const handleResize = () => {
+      // Tailwind's 'md' breakpoint is 768px, so matching that for consistency
+      setIsMobileView(window.innerWidth < 768);
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <footer className="bg-gray-100 py-10 px-4 md:px-8 shadow-inner mt-16">
@@ -24,77 +38,82 @@ const Footer = () => {
               Crafting delightful moments, one sweet treat at a time.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 gap-8 text-center md:text-left">
-            <div>
-              <h3 className="mb-4 text-lg font-semibold text-gray-800 uppercase">
-                Explore
-              </h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>
-                  <Link to="/" className="hover:text-red-600 transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/about"
-                    className="hover:text-red-600 transition-colors"
-                  >
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/contactUs"
-                    className="hover:text-red-600 transition-colors"
-                  >
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/filteredList"
-                    className="hover:text-red-600 transition-colors"
-                  >
-                    Shop
-                  </Link>
-                </li>
-              </ul>
+          {!isMobileView && (
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-8 text-center md:text-left">
+              <div>
+                <h3 className="mb-4 text-lg font-semibold text-gray-800 uppercase">
+                  Explore
+                </h3>
+                <ul className="text-gray-600 space-y-2">
+                  <li>
+                    <Link
+                      to="/"
+                      className="hover:text-red-600 transition-colors"
+                    >
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/about"
+                      className="hover:text-red-600 transition-colors"
+                    >
+                      About Us
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/contactUs"
+                      className="hover:text-red-600 transition-colors"
+                    >
+                      Contact Us
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/filteredList"
+                      className="hover:text-red-600 transition-colors"
+                    >
+                      Shop
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="mb-4 text-lg font-semibold text-gray-800 uppercase">
+                  Legal
+                </h3>
+                <ul className="text-gray-600 space-y-2">
+                  <li>
+                    <Link
+                      to="/privacyPolicy"
+                      className="hover:text-red-600 transition-colors"
+                    >
+                      Privacy Policy
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/terms-conditions"
+                      className="hover:text-red-600 transition-colors"
+                    >
+                      Terms &amp; Conditions
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/refund-policy"
+                      className="hover:text-red-600 transition-colors"
+                    >
+                      Refund Policy
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <h3 className="mb-4 text-lg font-semibold text-gray-800 uppercase">
-                Legal
-              </h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>
-                  <Link
-                    to="/privacyPolicy"
-                    className="hover:text-red-600 transition-colors"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/terms-conditions"
-                    className="hover:text-red-600 transition-colors"
-                  >
-                    Terms &amp; Conditions
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/refund-policy"
-                    className="hover:text-red-600 transition-colors"
-                  >
-                    Refund Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
+          )}
         </div>
-        <hr className="my-10 border-gray-300" />{" "}
+        <div className="my-10" />
         <div className="flex flex-col sm:flex-row sm:justify-between items-center text-center sm:text-left space-y-4 sm:space-y-0">
           <span className="text-sm text-gray-600">
             © {currentYear}{" "}
@@ -103,6 +122,9 @@ const Footer = () => {
             </Link>
             . All Rights Reserved.
           </span>
+          <p className="mt-2 text-sm">
+            Crafted with <FaHeart className="inline text-red-500" /> by You.
+          </p>
           <div className="flex space-x-6">
             <Link
               to="https://www.facebook.com/your-chocoDil"

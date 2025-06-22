@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +33,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 mt-16">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg z-10">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
@@ -121,21 +122,15 @@ const ContactUs = () => {
           <p>You can also reach us directly:</p>
           <p className="mt-2">
             Email:{" "}
-            <a
-              href="mailto:info@yourcompany.com"
-              className="text-indigo-600 hover:underline"
-            >
+            <Link to="#" className="text-indigo-600 hover:underline">
               info@yourcompany.com
-            </a>
+            </Link>
           </p>
           <p>
             Phone:{" "}
-            <a
-              href="tel:+1234567890"
-              className="text-indigo-600 hover:underline"
-            >
+            <Link to="#" className="text-indigo-600 hover:underline">
               +1 (234) 567-890
-            </a>
+            </Link>
           </p>
           <p>Address: 123 Cocoa Lane, ChokoDil City, State, ZIP</p>
         </div>

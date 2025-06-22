@@ -12,12 +12,15 @@ import ImageShimmer from "./ImageShimmer";
 import chocolateImage from "../images/chocolate.png";
 import smallChocolateImage from "../images/smallChocolate.png";
 import cakeImage from "../images/cake.png";
-import brownieImage from "../images/brownie.jpg"; // Assuming you have this image
-import mousseImage from "../images/mousse.jpg"; // Assuming you have this image
+import brownieImage from "../images/brownie.jpg";
+import mousseImage from "../images/mousse.jpg";
+import customer1 from "../images/customer1.jpg";
+import customer2 from "../images/customer2.jpg";
+import customer3 from "../images/customer3.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRestaurants, filterByCategory } from "../utils/restaurantSlice";
-import { ToastContainer, toast } from "react-toastify"; // For newsletter success/error
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Custom Hero Section Carousel Data
@@ -48,18 +51,21 @@ const testimonials = [
       "Absolutely delightful! The chocolates are out of this world, and the delivery was so fast.",
     author: "Priya Sharma",
     rating: 5,
+    customerImg: customer1,
   },
   {
     quote:
       "ChocoDil made our anniversary cake truly special. The taste was heavenly!",
     author: "Amit Singh",
     rating: 5,
+    customerImg: customer2,
   },
   {
     quote:
       "My go-to place for desserts now. Consistently fresh and incredibly tasty.",
-    author: "Sneha Reddy",
+    author: "Yinka",
     rating: 4,
+    customerImg: customer3,
   },
 ];
 
@@ -219,12 +225,18 @@ const LandingPage = () => {
               <p className="text-lg md:text-xl font-light mb-8 animate-fade-in-up">
                 {slide.subtext}
               </p>
-              <Link
-                to="/all-items"
+              <button
+                onClick={() => {
+                  window.innerWidth < 768
+                    ? window.scrollTo(0, 1700)
+                    : window.innerWidth < 1024
+                    ? window.scrollTo(0, 1600)
+                    : window.scrollTo(0, 1200);
+                }}
                 className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-purple-800 bg-white hover:bg-gray-100 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-bounce-slow"
               >
                 Explore All Delights!
-              </Link>
+              </button>
             </div>
             <img
               src={slide.image}
@@ -275,7 +287,7 @@ const LandingPage = () => {
         <h2 className="text-4xl font-extrabold text-center text-purple-700 mb-12">
           Explore Our Delicious Categories
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8 px-4">
           {contentCategories.map((item, index) => (
             <div
               key={index}
@@ -322,7 +334,7 @@ const LandingPage = () => {
         <h2 className="text-4xl font-extrabold text-purple-800 mb-10">
           What Our Customers Say
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
@@ -332,21 +344,32 @@ const LandingPage = () => {
               <p className="text-gray-700 text-lg italic mb-4 mt-8">
                 "{testimonial.quote}"
               </p>
-              <div className="flex justify-center mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar
-                    key={i}
-                    className={`text-xl ${
-                      i < testimonial.rating
-                        ? "text-yellow-400"
-                        : "text-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
               <p className="font-semibold text-gray-800">
                 - {testimonial.author}
               </p>
+              <div className="mt-4 items-center justify-center flex space-x-4">
+                <img
+                  src={testimonial.customerImg}
+                  alt="Customer img"
+                  className="w-36 h-36 rounded-full object-cover object-top border-4 border-pink-300 shadow-xl ml-6"
+                  onError={(e) => {
+                    e.target.src =
+                      "https://placehold.co/200x200/FFC0CB/6A0DAD?text=Customer";
+                  }}
+                />
+                <div className="flex justify-center mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar
+                      key={i}
+                      className={`text-xl ${
+                        i < testimonial.rating
+                          ? "text-yellow-400"
+                          : "text-gray-300"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -378,18 +401,6 @@ const LandingPage = () => {
           </button>
         </form>
       </section>
-
-      {/* Basic Footer (ensure you have a dedicated Footer component for real app) */}
-      <footer className="bg-gray-800 text-white py-8 text-center rounded-t-lg">
-        <div className="container mx-auto">
-          <p>
-            &copy; {new Date().getFullYear()} ChocoDil. All rights reserved.
-          </p>
-          <p className="mt-2 text-sm">
-            Crafted with <FaHeart className="inline text-red-500" /> by You.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };

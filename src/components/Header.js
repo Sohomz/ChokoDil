@@ -8,6 +8,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import chocolateIcon from "../images/dark-chocolate.png";
 import cartIcon from "../images/shopping-bag.png";
 import aboutUsIcon from "../images/about-us.png";
+import { FaHeadset, FaHands, FaIcons } from "react-icons/fa";
 
 const Header = () => {
   const cartItems = useSelector((store) => store.cart.items);
@@ -84,7 +85,7 @@ const Header = () => {
       )}
 
       {/* Desktop Navigation (hidden on mobile) */}
-      <ul className="hidden md:flex items-center justify-between space-x-6 lg:space-x-10 text-base lg:text-lg font-semibold">
+      <ul className="hidden md:flex items-center md:space-x-6 lg:space-x-8 justify-between text-base font-semibold">
         <li>
           <Link
             to="/"
@@ -123,12 +124,8 @@ const Header = () => {
             to="/About"
             className="flex flex-col items-center hover:text-gray-700 transition-colors"
           >
-            <img
-              className="h-7 w-7 object-contain"
-              src={aboutUsIcon}
-              alt="About Us"
-            />
-            <span className="mt-1 text-xs">About</span>
+            <FaHands className="text-2xl" />
+            <span className="mt-1 text-xs">About US</span>
           </Link>
         </li>
         <li>
@@ -137,7 +134,7 @@ const Header = () => {
             to="/contactUs"
             className="flex flex-col items-center hover:text-gray-700 transition-colors"
           >
-            <span className="text-base md:text-lg">Contact Us</span>
+            <FaHeadset className="text-2xl inline" />
           </Link>
         </li>
       </ul>
@@ -207,14 +204,11 @@ const Header = () => {
                 className="flex items-center text-gray-800 hover:bg-slate-100 p-3 rounded-md transition-colors w-full"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <img
-                  className="h-6 w-6 mr-3"
-                  src={aboutUsIcon}
-                  alt="About Us"
-                />
+                <FaHands className="text-2xl mr-4" />
                 About Us
               </Link>
             </li>
+            <hr />
             <li>
               <Link
                 to="/contactUs"
