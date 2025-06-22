@@ -74,7 +74,7 @@ const Header = () => {
 
       {/* Search Box (Conditional rendering based on path and view) */}
       {location.pathname === "/filteredList" ? (
-        <div className="flex-grow max-w-lg mx-4 sm:mx-2 md:mx-1">
+        <div className="flex sm:max-w-10 md:max-w-10">
           <SearchBox isMenuOpen={isMenuOpen} />
         </div>
       ) : (
@@ -140,18 +140,18 @@ const Header = () => {
       </ul>
 
       {/* Mobile Hamburger/Close Icon & Mini-Nav (visible on mobile) */}
-      <div className="flex items-center justify-between md:hidden">
+      <div className="flex items-center space-x-2 md:hidden">
         {/* Mobile Home Icon (if needed, otherwise remove) */}
         <Link to="/">
           <img
-            className="h-8 w-8 object-contain"
+            className="h-12 w-12 object-contain"
             src={chocolateIcon}
             alt="Home"
           />
         </Link>
 
         {/* Mobile Cart Icon */}
-        <Link to="/Cart" className="mx-2">
+        <Link to="/Cart" className="h-10 w-10 mt-2">
           <div className="relative">
             <img className="h-7 w-7 object-contain" src={cartIcon} alt="Cart" />
             {cartItems.length > 0 && ( // Only show badge if items exist
@@ -165,7 +165,7 @@ const Header = () => {
         {/* Hamburger/Close Button */}
         <button
           onClick={toggleMenu}
-          className="text-2xl p-2 focus:outline-none"
+          className="text-xl p-2 focus:outline-none"
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMenuOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
