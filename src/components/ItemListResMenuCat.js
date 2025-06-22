@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"; // Using Heroicons for icons
 import nullImageIcon from "../images/nullImage.png";
 
-function ItemListResMenuCat({ items, id }) {
+function ItemListResMenuCat({ items, id, qty }) {
   //id from cart.js to help in removeItem
   const dispatch = useDispatch();
   //console.log(items);
@@ -58,18 +58,17 @@ function ItemListResMenuCat({ items, id }) {
         </div>
 
         {/* Item Details */}
-        <div className="flex-grow justify-between">
+        <div className="flex-grow justify-between items-center">
           <h3 className="text-lg font-semibold text-gray-800 tracking-tight">
             {items.name}
           </h3>
-          <span className="font-semibold text-indigo-600 text-md">
-            ₹{parseFloat(items.price).toFixed(2)}
+          <span className="font-semibold text-green-700 text-md gap-3">
+            ₹{parseFloat(items.price).toFixed(2) * qty} (₹
+            {parseFloat(items.price).toFixed(2)}/pcs)
           </span>
-        </div>
-        <div>
-          <label className="p-5 rounded-md shadow-md">
-            Quantity {items.quantity}
-          </label>
+          <div>
+            <label className="rounded-md p-1 shadow-md">Quantity {qty}</label>
+          </div>
         </div>
 
         {/* Actions */}

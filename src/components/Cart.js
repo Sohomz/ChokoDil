@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import ItemListResMenuCat from "./ItemListResMenuCat";
 import { clearCart } from "../utils/cartSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { XCircleIcon } from "@heroicons/react/24/outline";
 import { toast, ToastContainer } from "react-toastify";
 import cartEmptyIcon from "../images/cartEmpty.png";
@@ -25,6 +25,10 @@ function Cart() {
   // Convert the grouped object into an array for rendering
   // This `itemsToRender` will contain unique items, each with an added 'quantity' property
   const itemsToRender = Object.values(groupedCartItems);
+  const totalPrice = itemsToRender.reduce(
+    (acc, curr) => acc + curr.price * curr.quantity,
+    0
+  );
 
   const handleClearCart = () => {
     if (
@@ -100,6 +104,21 @@ function Cart() {
             ))}
           </div>
         )}
+        <div
+          className="
+  bg-white           
+  p-6                
+  rounded-lg         
+  shadow-md          
+  mt-6               
+  text-center        
+  text-xl            
+  font-bold          
+  text-gray-800      
+"
+        >
+          Total is: INR {Math.floor(totalPrice)}/-
+        </div>
       </div>
     </div>
   );

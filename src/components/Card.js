@@ -12,7 +12,6 @@ const CardModernWhite = (props) => {
     name,
     description,
     price,
-    quantity,
     isVeg,
     isAvailable,
     category,
@@ -22,7 +21,12 @@ const CardModernWhite = (props) => {
     rating,
     image,
   } = props.passData;
-
+  const isInCart = {};
+  const quantityInCart = useSelector(
+    (state) => state.cart.items.filter((cartItem) => cartItem.id === id).length //to get the count how many in cart slice
+  );
+  const forTheQty = Object.values(isInCart);
+  //console.log(forTheQty[0].quantity);
   const [imageLoaded, setImageLoaded] = useState(false);
   const dispatch = useDispatch();
   const originalPrice = offer
@@ -76,6 +80,9 @@ const CardModernWhite = (props) => {
         <span className="ml-2 text-sm font-semibold text-gray-700">
           ({ratingValue})
         </span>
+        <span className=" border border-green-700 p-1 ml-10">
+          {quantityInCart} item/s in cart
+        </span>
       </div>
     );
   };
@@ -84,7 +91,6 @@ const CardModernWhite = (props) => {
     <>
       <ToastContainer className="mt-36" />
       <div className="relative group p-4 animate-slideUp">
-        {" "}
         {/* Added padding to the group for spacing */}
         <div
           className="
