@@ -102,13 +102,13 @@ function ItemsTable() {
       });
       setData(transformedDataRefined);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      //console.error("Error fetching data:", error);
       toast.error("Failed to load items.");
     }
   };
 
   const handleEdit = async (id) => {
-    console.log("Editing item with ID:", id);
+    //console.log("Editing item with ID:", id);
     setEditID(id);
 
     try {
