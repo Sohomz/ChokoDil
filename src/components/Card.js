@@ -81,8 +81,8 @@ const CardModernWhite = (props) => {
           ({ratingValue})
         </span>
         {quantityInCart > 0 ? (
-          <span className=" border border-green-700 p-1 ml-10">
-            {quantityInCart} item/s in cart
+          <span className=" border border-green-700 p-1 ml-10 text-sm">
+            {quantityInCart} pc/s in cart
           </span>
         ) : null}
       </div>
