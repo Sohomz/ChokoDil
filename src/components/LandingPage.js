@@ -382,7 +382,7 @@ const LandingPage = () => {
         </p>
         <form
           onSubmit={handleNewsletterSignup}
-          className="max-w-md mx-auto flex flex-col sm:flex-row gap-4 px-4"
+          className="max-w-screen-md mx-auto flex flex-col sm:flex-row gap-4 px-4"
         >
           <input
             type="email"
