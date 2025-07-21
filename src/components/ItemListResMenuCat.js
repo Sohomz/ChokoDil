@@ -13,11 +13,6 @@ function ItemListResMenuCat({ items, id, qty }) {
   const handleClick = () => {
     try {
       dispatch(addItem(items));
-      toast.success(`${items.name} added to cart!`, {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: true,
-      });
     } catch (err) {
       toast.error("Failed to add item to cart.", {
         position: "top-right",

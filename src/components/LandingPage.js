@@ -225,11 +225,7 @@ const LandingPage = () => {
               </p>
               <button
                 onClick={() => {
-                  window.innerWidth < 768
-                    ? window.scrollTo(0, 1700)
-                    : window.innerWidth < 1024
-                    ? window.scrollTo(0, 1600)
-                    : window.scrollTo(0, 1200);
+                  location.href = "#sectionDelight";
                 }}
                 className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-purple-800 bg-white hover:bg-gray-100 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg animate-bounce-slow"
               >
@@ -281,7 +277,7 @@ const LandingPage = () => {
       </section>
 
       {/* Dynamic Category Cards Grid */}
-      <section className="py-16 px-4 md:px-0 mb-12">
+      <section className="py-16 px-4 md:px-0 mb-12" id="sectionDelight">
         <h2 className="text-4xl font-extrabold text-center text-purple-700 mb-12">
           Explore Our Delicious Categories
         </h2>
