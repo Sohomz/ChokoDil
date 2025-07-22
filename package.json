@@ -4,12 +4,13 @@
   "version": "1.0.0",
   "description": "this is to create a mock web app using demo structure",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "parcel index.html --cache-dir .parcel-cache",
     "build": "cross-env TEMP=G:\\craftykoko\\.tmp TMPDIR=G:\\craftykoko\\.tmp parcel build index.html --public-url /ChokoDil/ --cache-dir .parcel-cache",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "postbuild": "cp dist/index.html dist/404.html"
+    "postbuild": "copy dist\\index.html dist\\404.html",
+    "coverage": "jest --coverage"
   },
   "keywords": [
     "mock",
@@ -36,12 +37,18 @@
     "react-toastify": "^11.0.5"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.27.2",
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
     "autoprefixer": "^10.4.20",
+    "babel-jest": "^30.0.4",
     "buffer": "^6.0.3",
     "cross-env": "^7.0.3",
     "gh-pages": "^6.3.0",
+    "jest": "^30.0.4",
+    "jest-environment-jsdom": "^30.0.4",
     "parcel": "^2.13.3",
     "postcss": "^8.4.49",
     "process": "^0.11.10",
