@@ -1,4 +1,4 @@
-import React from "react";
+import { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import Header from "./components/Header";
@@ -10,19 +10,22 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
-import About from "./components/About";
 import ErrorPage from "./components/ErrorPage";
 import ResturantMenu from "./components/ResturantMenu";
 import UserContext from "./utils/UserContext";
 import { Provider } from "react-redux";
 import appstore from "./utils/appStore";
-import Cart from "./components/Cart";
 import CreateItem from "./components/CreateItem";
 import ItemsTable from "./components/ItemsTable";
-import LandingPage from "./components/LandingPage";
 import { useState, useEffect } from "react";
-import ContactUs from "./components/ContactUs";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import Shimmer from "./components/Shimmer";
+
+//Lazy loading
+const Cart = lazy(() => import("./components/Cart"));
+const About = lazy(() => import("./components/About"));
+const ContactUs = lazy(() => import("./components/ContactUs"));
+const LandingPage = lazy(() => import("./components/LandingPage"));
 
 const AppLayout = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -57,14 +60,43 @@ root.render(
         Using 'index' makes LandingPage the default component when at the base path.
       */}
       <Route path="/" element={<AppLayout />}>
-        <Route index element={<LandingPage />} />
-        <Route path="/About" element={<About />} />
-        <Route path="/Cart" element={<Cart />} />
+        <Route
+          index
+          path="/"
+          element={
+            <Suspense fallback={<Shimmer />}>
+              <LandingPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/About"
+          element={
+            <Suspense fallback={<Shimmer />}>
+              <About />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/Cart"
+          element={
+            <Suspense fallback={<Shimmer />}>
+              <Cart />
+            </Suspense>
+          }
+        />
         <Route path="/resturants/:resId" element={<ResturantMenu />} />
         <Route path="/create" element={<CreateItem />} />
         <Route path="/itemsTable" element={<ItemsTable />} />
         <Route path="/filteredList" element={<Body />} />
-        <Route path="/contactUs" element={<ContactUs />} />
+        <Route
+          path="/contactUs"
+          element={
+            <Suspense fallback={<Shimmer />}>
+              <ContactUs />
+            </Suspense>
+          }
+        />
         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
 
         {/* This will catch any invalid paths *within* the /ChokoDil base */}
