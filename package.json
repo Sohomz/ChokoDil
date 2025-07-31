@@ -8,7 +8,7 @@
     "start": "parcel index.html --cache-dir .parcel-cache",
     "build": "cross-env TEMP=G:\\craftykoko\\.tmp TMPDIR=G:\\craftykoko\\.tmp parcel build index.html --public-url /ChokoDil/ --cache-dir .parcel-cache",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d dist -r https://github.com/Sohomz/ChokoDil",
     "postbuild": "copy dist\\index.html dist\\404.html",
     "coverage": "jest --coverage"
   },

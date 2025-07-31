@@ -20,6 +20,8 @@ import ItemsTable from "./components/ItemsTable";
 import { useState, useEffect } from "react";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import Shimmer from "./components/Shimmer";
+import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 //Lazy loading
 const Cart = lazy(() => import("./components/Cart"));
@@ -86,8 +88,22 @@ root.render(
           }
         />
         <Route path="/resturants/:resId" element={<ResturantMenu />} />
-        <Route path="/create" element={<CreateItem />} />
-        <Route path="/itemsTable" element={<ItemsTable />} />
+        <Route
+          path="/create"
+          element={
+            <ProtectedRoute>
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/itemsTable"
+          element={
+            <ProtectedRoute>
+              <ItemsTable />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/filteredList" element={<Body />} />
         <Route
           path="/contactUs"

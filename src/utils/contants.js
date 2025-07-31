@@ -6,4 +6,6 @@ const images = {
   TOTAL_STARS: 5,
 };
 
+export const creds = { uid: "sohomd088", pwd: "funGG65@tt" };
+
 export default images;
