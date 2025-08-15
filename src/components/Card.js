@@ -96,7 +96,7 @@ const CardModernWhite = (props) => {
         {/* Added padding to the group for spacing */}
         <div
           className="
-            w-80 bg-white rounded-xl overflow-hidden
+            w-80 bg-slate-100 border border-slate-300 rounded-xl overflow-hidden
             shadow-lg hover:shadow-xl transition-all duration-300
             transform hover:-translate-y-1 hover:scale-[1.01]
           "
