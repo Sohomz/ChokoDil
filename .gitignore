@@ -4,3 +4,4 @@ dist
 .tmp
 firebase-config.js
 /coverage
+.vscode
