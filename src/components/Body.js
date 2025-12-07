@@ -4,6 +4,7 @@ import useOnlineStatus from "../utils/useOnlineStatus.js";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const Body = () => {
   // Check online status
@@ -47,6 +48,7 @@ const Body = () => {
 
   return (
     <div className="bg-white mt-24">
+      <ToastContainer className="mt-36" />
       <div className="flex flex-wrap p-10 justify-evenly items-center">
         {filteredList.map((item) =>
           !item.isAvailable ? (

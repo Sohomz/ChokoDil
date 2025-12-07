@@ -38,10 +38,10 @@ const CardModernWhite = (props) => {
       dispatch(addItem(props.passData));
       toast.success("Item added to cart!", {
         position: "top-right",
-        autoClose: 1500,
+        autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
-        pauseOnHover: true,
+        pauseOnHover: false,
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -52,7 +52,7 @@ const CardModernWhite = (props) => {
         autoClose: 1500,
         hideProgressBar: true,
         closeOnClick: true,
-        pauseOnHover: true,
+        pauseOnHover: false,
         draggable: true,
         progress: undefined,
         theme: "light",
@@ -91,7 +91,6 @@ const CardModernWhite = (props) => {
 
   return (
     <>
-      <ToastContainer className="mt-36" />
       <div className="relative group p-4 animate-slideUp">
         {/* Added padding to the group for spacing */}
         <div
